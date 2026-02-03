@@ -1,0 +1,59 @@
+:root {
+  --border-color: #ccc;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #444;
+}
+
+main {
+  padding: 1rem;
+}
+
+h1 {
+  padding: 1rem;
+  margin: 0;
+}
+
+header {
+  background-color: rgb(61, 87, 146);
+  color: white;
+}
+
+section {
+  margin-block: 0.25rem;
+}
+
+div {
+  display: flex;
+  flex-direction: column;
+  margin-block: 0.25rem;
+}
+
+label {
+  margin-block: 0.25rem;
+}
+
+input {
+  padding: 0.25rem;
+  border: 1px solid var(--border-color);
+}
+
+button {
+  margin-block: 0.25rem;
+  padding-block: 0.3rem;
+  padding-inline: 0.6rem;
+  background-color: rgb(61, 87, 146);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+button:hover {
+  background-color: black;
+  color: white;
+}
