@@ -6,6 +6,73 @@
     <title>fed25d-js-inl-2-budget-app-ngeliecode</title>
   </head>
   <body>
+    <header>
+      <h1>Budgetkollen</h1>
+    </header>
+    <main>
+      <section>
+        <h2>Inkomster</h2>
+        <form>
+          <div>
+            <label>Beskrivning</label>
+            <input
+              type="text"
+              id="expenseDescription"
+              class="expense-description"
+              name="expense-description"
+            />
+          </div>
+          <div>
+            <label>Belopp</label>
+            <input
+              type="number"
+              id="expenseAmount"
+              class="expense-amount"
+              name="expense-amount"
+            />
+          </div>
+          <button type="submit">Lägg till</button>
+        </form>
+
+        <ul>
+          <!-- inkomster renderas här -->
+        </ul>
+      </section>
+
+      <section>
+        <h2>Utgifter</h2>
+        <form>
+          <div>
+            <label>Beskrivning</label>
+            <input
+              type="text"
+              id="expenseDescription"
+              class="expense-description"
+              name="expense-description"
+            />
+          </div>
+          <div>
+            <label>Belopp</label>
+            <input
+              type="number"
+              id="expenseAmount"
+              class="expense-amount"
+              name="expense-amount"
+            />
+          </div>
+          <button type="submit">Lägg till</button>
+        </form>
+
+        <ul>
+          <!-- ugifter renderas här -->
+        </ul>
+      </section>
+
+      <section>
+        <h2>Balans</h2>
+      </section>
+    </main>
+    <footer></footer>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
