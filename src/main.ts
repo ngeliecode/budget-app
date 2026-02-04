@@ -13,10 +13,12 @@ const expenses = [];
 const addIncomeItemBtn = document.querySelector("#addIncomeItemBtn");
 const addExpenseItemBtn = document.querySelector("#addExpenseItemBtn");
 
+// Dropdowns
+const incomeCategorySelect = document.querySelector("#incomeCategory");
+const expenseCategorySelect = document.querySelector("#expenseCategory");
+
 // Definiera globala variabler som pekar på input-fälten
-const incomeDescriptionInput = document.querySelector("#incomeDescription");
 const incomeAmountInput = document.querySelector("#incomeAmount");
-const expenseDescriptionInput = document.querySelector("#expenseDescription");
 const expenseAmountInput = document.querySelector("#expenseAmount");
 
 // Listor där budgetposter ska renderas
@@ -39,14 +41,14 @@ addExpenseItemBtn?.addEventListener("click", createExpenseBudgetPostOnClick);
 function createIncomeBudgetPostOnClick() {
   console.log("Inkomst-knappen funkar!");
   // 1. läs värden från input-fälten och spara dom i lokala variabler
-  const description = incomeDescriptionInput?.value;
+  const category = incomeCategorySelect?.value;
   const amount = incomeAmountInput?.value;
   // Testa så det funkar!
-  console.log(description);
+  console.log(category);
   console.log(amount);
   // 2. Skapar budgetpost
   const budgetPost = {
-    description: description,
+    category: category,
     amount: amount,
   };
   console.log(budgetPost);
@@ -61,14 +63,14 @@ function createIncomeBudgetPostOnClick() {
 function createExpenseBudgetPostOnClick() {
   console.log("Utgift-knappen funkar!");
 
-  const description = expenseDescriptionInput?.value;
+  const category = expenseCategorySelect?.value;
   const amount = expenseAmountInput?.value;
 
-  console.log(description);
+  console.log(category);
   console.log(amount);
 
   const budgetPost = {
-    description: description,
+    category: category,
     amount: amount,
   };
 
@@ -89,7 +91,7 @@ function renderIncomeList() {
   incomes.forEach((budgetPost, index) => {
     html += `
       <li>
-        ${budgetPost.description} - ${budgetPost.amount}
+        ${budgetPost.category} - ${budgetPost.amount}
         <button class="delete-income" data-id="${index}">Radera</button>
       </li>`;
   });
@@ -109,7 +111,7 @@ function renderExpenseList() {
   expenses.forEach((budgetPost, index) => {
     html += `
       <li>
-        ${budgetPost.description} - ${budgetPost.amount}
+        ${budgetPost.category} - ${budgetPost.amount}
         <button class="delete-expense" data-id="${index}">Radera</button>
       </li>`;
   });
