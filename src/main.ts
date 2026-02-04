@@ -1,6 +1,14 @@
 // @ts-nocheck
 import "./style.css";
 
+// =================================================================================
+// VARIABLER =======================================================================
+// =================================================================================
+
+// Här är listorna med data (värden från inputs)
+const incomes = [];
+const expenses = [];
+
 // Definiera globala variabler som pekar på "Lägg till" knapparna
 const addIncomeItemBtn = document.querySelector("#addIncomeItemBtn");
 const addExpenseItemBtn = document.querySelector("#addExpenseItemBtn");
@@ -11,9 +19,21 @@ const incomeAmountInput = document.querySelector("#incomeAmount");
 const expenseDescriptionInput = document.querySelector("#expenseDescription");
 const expenseAmountInput = document.querySelector("#expenseAmount");
 
-// Lyssna efter klick på "Lägg till" knappen
-addIncomeItemBtn.addEventListener("click", createIncomeBudgetPostOnClick);
-addExpenseItemBtn.addEventListener("click", createExpenseBudgetPostOnClick);
+// Listor där budgetposter ska renderas
+const incomeList = document.querySelector("#incomeList");
+const expenseList = document.querySelector("#expenseList");
+
+// =================================================================================
+// EVENT-LYSSNARE ==================================================================
+// =================================================================================
+
+// Lyssna efter klick på "Lägg till" knappar
+addIncomeItemBtn?.addEventListener("click", createIncomeBudgetPostOnClick);
+addExpenseItemBtn?.addEventListener("click", createExpenseBudgetPostOnClick);
+
+// =================================================================================
+// FUNKTIONER ======================================================================
+// =================================================================================
 
 // Läs in, spara och skapa budgetpost av inmatat värde
 function createIncomeBudgetPostOnClick() {
@@ -30,7 +50,12 @@ function createIncomeBudgetPostOnClick() {
     amount: amount,
   };
   console.log(budgetPost);
-  // 3. Rendera
+  // 3. lägg data i array
+  incomes.push(budgetPost);
+  console.log(incomes);
+
+  // 4. Rendera listan så att den syns på skärmen
+  renderIncomeList();
 }
 
 function createExpenseBudgetPostOnClick() {
@@ -46,5 +71,67 @@ function createExpenseBudgetPostOnClick() {
     description: description,
     amount: amount,
   };
-  console.log(budgetPost);
+
+  expenses.push(budgetPost);
+
+  // Rendera utgiftslistan
+  renderExpenseList();
+}
+
+// Rendera budgetposter
+function renderIncomeList() {
+  if (!incomeList) return;
+
+  console.log("renderIncomeList körs");
+
+  let html = "";
+
+  incomes.forEach((budgetPost, index) => {
+    html += `
+      <li>
+        ${budgetPost.description} - ${budgetPost.amount}
+        <button class="delete-income" data-id="${index}">Radera</button>
+      </li>`;
+  });
+
+  incomeList.innerHTML = html;
+
+  document.querySelectorAll("button.delete-income").forEach((btn) => {
+    btn.addEventListener("click", deleteIncomeBudgetPost);
+  });
+}
+
+function renderExpenseList() {
+  if (!expenseList) return;
+
+  let html = "";
+
+  expenses.forEach((budgetPost, index) => {
+    html += `
+      <li>
+        ${budgetPost.description} - ${budgetPost.amount}
+        <button class="delete-expense" data-id="${index}">Radera</button>
+      </li>`;
+  });
+
+  expenseList.innerHTML = html;
+
+  document.querySelectorAll("button.delete-expense").forEach((btn) => {
+    btn.addEventListener("click", deleteExpenseBudgetPost);
+  });
+}
+
+// Radera budgetposter
+function deleteIncomeBudgetPost(event) {
+  const id = Number(event.target.dataset.id);
+
+  incomes.splice(id, 1);
+  renderIncomeList();
+}
+
+function deleteExpenseBudgetPost(event) {
+  const id = Number(event.target.dataset.id);
+
+  expenses.splice(id, 1);
+  renderExpenseList();
 }
