@@ -1,5 +1,7 @@
 // @ts-nocheck
+
 import "./style.css";
+import categories from "./categories.json";
 
 // =================================================================================
 // VARIABLER =======================================================================
@@ -18,6 +20,8 @@ const incomeCategorySelect = document.querySelector("#incomeCategory");
 const expenseCategorySelect = document.querySelector("#expenseCategory");
 
 // Definiera globala variabler som pekar på input-fälten
+const incomeDescriptionInput = document.querySelector("#incomeDescription");
+const expenseDescriptionInput = document.querySelector("#expenseDescription");
 const incomeAmountInput = document.querySelector("#incomeAmount");
 const expenseAmountInput = document.querySelector("#expenseAmount");
 
@@ -40,33 +44,39 @@ addExpenseItemBtn?.addEventListener("click", createExpenseBudgetPostOnClick);
 // Läs in, spara och skapa budgetpost av inmatat värde
 function createIncomeBudgetPostOnClick() {
   console.log("Inkomst-knappen funkar!");
-  // 1. läs värden från input-fälten och spara dom i lokala variabler
-  const category = incomeCategorySelect?.value;
-  const amount = incomeAmountInput?.value;
+  // 1. läs värde från dropdown-lista och spara dom i lokala variabler
+  const category = incomeCategorySelect?.value; // null = medvetet tomt värde
+  // 2. läs värden från input-fälten
+  const description = incomeDescriptionInput?.value;
+  const amount = Number(incomeAmountInput?.value); // inte en sträng
   // Testa så det funkar!
   console.log(category);
+  console.log(description);
   console.log(amount);
-  // 2. Skapar budgetpost
+  // 3. Skapa budgetpost
   const budgetPost = {
-    category: category,
-    amount: amount,
+    category, // dropdown-option
+    description, // input-value
+    amount, // input-value
   };
   console.log(budgetPost);
-  // 3. lägg data i array
+  // 3. lägg data i arrayen högst upp i filen
   incomes.push(budgetPost);
   console.log(incomes);
 
   // 4. Rendera listan så att den syns på skärmen
-  renderIncomeList();
+  renderIncomeBudgetPost();
 }
 
 function createExpenseBudgetPostOnClick() {
   console.log("Utgift-knappen funkar!");
 
   const category = expenseCategorySelect?.value;
+  const description = expenseDescriptionInput?.value;
   const amount = expenseAmountInput?.value;
 
   console.log(category);
+  console.log(description);
   console.log(amount);
 
   const budgetPost = {
@@ -76,15 +86,30 @@ function createExpenseBudgetPostOnClick() {
 
   expenses.push(budgetPost);
 
-  // Rendera utgiftslistan
-  renderExpenseList();
+  // Rendera
+  renderExpenseBudgetPost();
 }
 
-// Rendera budgetposter
-function renderIncomeList() {
+// Rendera options till dropdown (select)
+function renderCategoryOptions(selectDropdown, categories) {
+  // Kolla så att dropdown-listan finns
+  if (!selectDropdown) return;
+  // Skapa en tom option
+  let html = `<option value="">Välj kategori</option>`;
+  // Gå igenom varje kategori i json
+  categories.forEach((category) => {
+    // Skapa <option>
+    html += `<option value="${category.value}">${category.text}</option>`;
+  });
+  // rendera ut i <select>
+  selectDropdown.innerHTML = html;
+}
+
+// Rendera budgetposter i <ul> - (kategori, beskrivning + belopp)
+function renderIncomeBudgetPost() {
   if (!incomeList) return;
 
-  console.log("renderIncomeList körs");
+  console.log("renderIncomeBudgetPost körs");
 
   let html = "";
 
@@ -103,7 +128,7 @@ function renderIncomeList() {
   });
 }
 
-function renderExpenseList() {
+function renderExpenseBudgetPost() {
   if (!expenseList) return;
 
   let html = "";
@@ -128,12 +153,27 @@ function deleteIncomeBudgetPost(event) {
   const id = Number(event.target.dataset.id);
 
   incomes.splice(id, 1);
-  renderIncomeList();
+  renderIncomeBudgetPost();
 }
 
 function deleteExpenseBudgetPost(event) {
   const id = Number(event.target.dataset.id);
 
   expenses.splice(id, 1);
-  renderExpenseList();
+  renderExpenseBudgetPost();
 }
+
+// =================================================================================
+// ANROP ===========================================================================
+// =================================================================================
+
+/* 
+Jag lägger anropen längst ner i filen för att säkerställa att det kommer 
+efter JSON är importerad,
+querySelector har körts, 
+funktioner är definierade
+*/
+
+// Anropa rätt dropdown med rätt kategorier
+renderCategoryOptions(incomeCategorySelect, categories.income);
+renderCategoryOptions(expenseCategorySelect, categories.expense);
