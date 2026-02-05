@@ -5,23 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>fed25d-js-inl-2-budget-app-ngeliecode</title>
   </head>
+
   <body>
     <header>
       <h1>Budgetkollen</h1>
     </header>
+
     <main>
       <section>
         <h2>Inkomster</h2>
+
         <form>
           <div>
-            <label>Kategorisera inkomst</label>
+            <label>Kategori</label>
             <select id="incomeCategory">
-              <option value="">Välj kategori</option>
-              <option value="Lön">Lön</option>
-              <option value="CSN">Bidrag</option>
-              <option value="Fonder och aktier">Övrigt</option>
+              <!-- dropdown-options renderas här -->
             </select>
           </div>
+
+          <div>
+            <label>Beskrivning</label>
+            <input
+              type="text"
+              id="incomeDescription"
+              class="income-description"
+              name="income-description"
+            />
+          </div>
+
           <div>
             <label>Summa</label>
             <input
@@ -31,24 +42,34 @@
               name="income-amount"
             />
           </div>
+
           <button type="button" id="addIncomeItemBtn">Lägg till</button>
         </form>
+
         <ul id="incomeList">
-          <!-- inkomster renderas här -->
+          <!-- budgetpost renderas här (kategori, beskrivning, belopp) -->
         </ul>
       </section>
 
       <section>
         <h2>Utgifter</h2>
+
         <form>
           <div>
-            <label>Kategorisera utgift</label>
+            <label>Kategori</label>
             <select id="expenseCategory">
-              <option value="">Välj kategori</option>
-              <option value="Lön">Lön</option>
-              <option value="CSN">Bidrag</option>
-              <option value="Fonder och aktier">Övrigt</option>
+              <!-- dropdown-options renderas här -->
             </select>
+          </div>
+
+          <div>
+            <label>Beskrivning</label>
+            <input
+              type="text"
+              id="expenseDescription"
+              class="expense-description"
+              name="expense-description"
+            />
           </div>
 
           <div>
@@ -60,11 +81,12 @@
               name="expense-amount"
             />
           </div>
+
           <button type="button" id="addExpenseItemBtn">Lägg till</button>
         </form>
 
         <ul id="expenseList">
-          <!-- ugifter renderas här -->
+          <!-- budgetpost renderas här (kategori, beskrivning, belopp) -->
         </ul>
       </section>
 
@@ -72,7 +94,9 @@
         <h2>Balans</h2>
       </section>
     </main>
+
     <footer></footer>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
