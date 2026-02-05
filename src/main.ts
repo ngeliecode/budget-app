@@ -39,6 +39,9 @@ const expenseAmountInput = document.querySelector("#expenseAmount");
 const incomeList = document.querySelector("#incomeList");
 const expenseList = document.querySelector("#expenseList");
 
+// Balans
+const balanceEl = document.querySelector("#balance");
+
 // =================================================================================
 // EVENT-LYSSNARE ==================================================================
 // =================================================================================
@@ -67,7 +70,7 @@ function createIncomeBudgetPostOnClick() {
   const budgetPost = {
     category, // dropdown-option
     description, // input-value
-    amount, // input-value
+    amount: Number(incomeAmountInput.value), // input-value
   };
 
   // 4. uppdatera data (i arrayen högst upp i filen)
@@ -76,6 +79,7 @@ function createIncomeBudgetPostOnClick() {
   saveToLocalStorage();
   // 6. visa data (visuellt på sidan)
   renderIncomeBudgetPost();
+  renderBalance();
 }
 
 function createExpenseBudgetPostOnClick() {
@@ -83,35 +87,22 @@ function createExpenseBudgetPostOnClick() {
 
   const category = expenseCategorySelect?.value;
   const description = expenseDescriptionInput?.value;
-  const amount = expenseAmountInput?.value;
+  const amount = Number(expenseAmountInput?.value);
 
   console.log(category);
   console.log(description);
   console.log(amount);
 
   const budgetPost = {
-    category: category,
-    amount: amount,
+    category,
+    description,
+    amount: Number(expenseAmountInput.value),
   };
 
   expenses.push(budgetPost);
   saveToLocalStorage();
   renderExpenseBudgetPost();
-}
-
-// Rendera options till dropdown (select)
-function renderCategoryOptions(selectDropdown, categories) {
-  // Kolla så att dropdown-listan finns
-  if (!selectDropdown) return;
-  // Skapa en tom option
-  let html = `<option value="">Välj kategori</option>`;
-  // Gå igenom varje kategori i json
-  categories.forEach((category) => {
-    // Skapa <option>
-    html += `<option value="${category.value}">${category.text}</option>`;
-  });
-  // rendera ut i <select>
-  selectDropdown.innerHTML = html;
+  renderBalance();
 }
 
 // Rendera budgetposter i <ul> - (kategori, beskrivning + belopp)
@@ -124,8 +115,7 @@ function renderIncomeBudgetPost() {
 
   incomes.forEach((budgetPost, index) => {
     html += `
-      <li>
-        ${budgetPost.category} - ${budgetPost.description} - ${budgetPost.amount} kr
+      <li>${budgetPost.category}: ${budgetPost.description} - ${budgetPost.amount} kr
         <button class="delete-income" data-id="${index}">Radera</button>
       </li>`;
   });
@@ -145,7 +135,7 @@ function renderExpenseBudgetPost() {
   expenses.forEach((budgetPost, index) => {
     html += `
       <li>
-        ${budgetPost.category} - ${budgetPost.amount}
+        ${budgetPost.category}: ${budgetPost.description} - ${budgetPost.amount}
         <button class="delete-expense" data-id="${index}">Radera</button>
       </li>`;
   });
@@ -164,6 +154,7 @@ function deleteIncomeBudgetPost(event) {
   incomes.splice(id, 1);
   saveToLocalStorage();
   renderIncomeBudgetPost();
+  renderBalance();
 }
 
 function deleteExpenseBudgetPost(event) {
@@ -172,7 +163,29 @@ function deleteExpenseBudgetPost(event) {
   expenses.splice(id, 1);
   saveToLocalStorage();
   renderExpenseBudgetPost();
+  renderBalance();
 }
+
+// -------------------------------------------------------------------------------
+// DROPDOWN ----------------------------------------------------------------------
+
+// Rendera options till dropdown (select)
+function renderCategoryOptions(selectDropdown, categories) {
+  // Kolla så att dropdown-listan finns
+  if (!selectDropdown) return;
+  // Skapa en tom option
+  let html = `<option value="">Välj kategori</option>`;
+  // Gå igenom varje kategori i json
+  categories.forEach((category) => {
+    // Skapa <option>
+    html += `<option value="${category.value}">${category.text}</option>`;
+  });
+  // rendera ut i <select>
+  selectDropdown.innerHTML = html;
+}
+
+// -------------------------------------------------------------------------------
+// LOCAL STORAGE -----------------------------------------------------------------
 
 // Spara till localStorage
 function saveToLocalStorage() {
@@ -196,6 +209,34 @@ function loadFromLocalStorage() {
   }
 }
 
+// -------------------------------------------------------------------------------
+// BALANS ------------------------------------------------------------------------
+
+// Räkna balansen
+function calculateBalance() {
+  let totalIncome = 0;
+  let totalExpense = 0;
+
+  incomes.forEach((post) => {
+    totalIncome += post.amount;
+  });
+
+  expenses.forEach((post) => {
+    totalExpense += post.amount;
+  });
+
+  // inkomst - utgift
+  return totalIncome - totalExpense;
+}
+
+// Rendera balansen
+function renderBalance() {
+  if (!balanceEl) return;
+
+  const balance = calculateBalance();
+  balanceEl.textContent = `Balans: ${balance} kr`;
+}
+
 // =================================================================================
 // ANROP ===========================================================================
 // =================================================================================
@@ -207,8 +248,18 @@ querySelector har körts,
 funktioner är definierade
 */
 
+// Rad 1 - Data FÖRST ______________________________________________________________
+
 // data hämtas från local storage efter sidladdning
 loadFromLocalStorage();
+
+// Rad 2 - UI efter ________________________________________________________________
+
+renderIncomeBudgetPost();
+renderExpenseBudgetPost();
+renderBalance();
+
+// Rad 3 - Flexibla ________________________________________________________________
 
 // Anropa rätt dropdown med rätt kategorier
 renderCategoryOptions(incomeCategorySelect, categories.income);
