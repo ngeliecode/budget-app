@@ -1,0 +1,38 @@
+{
+  "income": [
+    {
+      "text": "Lön",
+      "value": "salary"
+    },
+    {
+      "text": "Studiebidrag",
+      "value": "studentincome"
+    },
+    {
+      "text": "Utdelning",
+      "value": "dividend"
+    }
+  ],
+  "expense": [
+    {
+      "text": "Boende",
+      "value": "living"
+    },
+    {
+      "text": "Nöje",
+      "value": "entertainment"
+    },
+    {
+      "text": "Mat",
+      "value": "food"
+    },
+    {
+      "text": "Kläder",
+      "value": "clothing"
+    },
+    {
+      "text": "Sparande",
+      "value": "savings"
+    }
+  ]
+}
