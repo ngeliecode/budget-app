@@ -4,12 +4,22 @@ import "./style.css";
 import categories from "./categories.json";
 
 // =================================================================================
-// VARIABLER =======================================================================
+// localStorage ====================================================================
 // =================================================================================
 
-// Här är listorna med data (värden från inputs)
+/*
+Här är listorna med data (värden från inputs och select) 
+som ska sparas i localStorage.
+
+"const" låser arrayen, inte innehållet
+*/
+
 const incomes = [];
 const expenses = [];
+
+// =================================================================================
+// VARIABLER / QUERY-SELECTORS =====================================================
+// =================================================================================
 
 // Definiera globala variabler som pekar på "Lägg till" knapparna
 const addIncomeItemBtn = document.querySelector("#addIncomeItemBtn");
@@ -41,7 +51,7 @@ addExpenseItemBtn?.addEventListener("click", createExpenseBudgetPostOnClick);
 // FUNKTIONER ======================================================================
 // =================================================================================
 
-// Läs in, spara och skapa budgetpost av inmatat värde
+// Läs in, spara och skapa budgetpost av inmatat värde (data)
 function createIncomeBudgetPostOnClick() {
   console.log("Inkomst-knappen funkar!");
   // 1. läs värde från dropdown-lista och spara dom i lokala variabler
@@ -59,12 +69,12 @@ function createIncomeBudgetPostOnClick() {
     description, // input-value
     amount, // input-value
   };
-  console.log(budgetPost);
-  // 3. lägg data i arrayen högst upp i filen
-  incomes.push(budgetPost);
-  console.log(incomes);
 
-  // 4. Rendera listan så att den syns på skärmen
+  // 4. uppdatera data (i arrayen högst upp i filen)
+  incomes.push(budgetPost);
+  // 5. spara data
+  saveToLocalStorage();
+  // 6. visa data (visuellt på sidan)
   renderIncomeBudgetPost();
 }
 
@@ -85,8 +95,7 @@ function createExpenseBudgetPostOnClick() {
   };
 
   expenses.push(budgetPost);
-
-  // Rendera
+  saveToLocalStorage();
   renderExpenseBudgetPost();
 }
 
@@ -116,7 +125,7 @@ function renderIncomeBudgetPost() {
   incomes.forEach((budgetPost, index) => {
     html += `
       <li>
-        ${budgetPost.category} - ${budgetPost.amount}
+        ${budgetPost.category} - ${budgetPost.description} - ${budgetPost.amount} kr
         <button class="delete-income" data-id="${index}">Radera</button>
       </li>`;
   });
@@ -153,6 +162,7 @@ function deleteIncomeBudgetPost(event) {
   const id = Number(event.target.dataset.id);
 
   incomes.splice(id, 1);
+  saveToLocalStorage();
   renderIncomeBudgetPost();
 }
 
@@ -160,7 +170,30 @@ function deleteExpenseBudgetPost(event) {
   const id = Number(event.target.dataset.id);
 
   expenses.splice(id, 1);
+  saveToLocalStorage();
   renderExpenseBudgetPost();
+}
+
+// Spara till localStorage
+function saveToLocalStorage() {
+  // Gör om arrayer till strings (text) och spara dom till localStorage
+  localStorage.setItem("incomes", JSON.stringify(incomes));
+  localStorage.setItem("expenses", JSON.stringify(expenses));
+}
+
+// Läs från localStorage
+function loadFromLocalStorage() {
+  // Hämta sparad data och gör om text --> objekt och lägg i array
+  const savedIncomes = localStorage.getItem("incomes");
+  const savedExpenses = localStorage.getItem("expenses");
+
+  if (savedIncomes) {
+    incomes.push(...JSON.parse(savedIncomes));
+  }
+
+  if (savedExpenses) {
+    expenses.push(...JSON.parse(savedExpenses));
+  }
 }
 
 // =================================================================================
@@ -168,11 +201,14 @@ function deleteExpenseBudgetPost(event) {
 // =================================================================================
 
 /* 
-Jag lägger anropen längst ner i filen för att säkerställa att det kommer 
-efter JSON är importerad,
+Jag lägger anropen längst ner i filen för att säkerställa att det kommer EFTER:
+JSON är importerad,
 querySelector har körts, 
 funktioner är definierade
 */
+
+// data hämtas från local storage efter sidladdning
+loadFromLocalStorage();
 
 // Anropa rätt dropdown med rätt kategorier
 renderCategoryOptions(incomeCategorySelect, categories.income);
