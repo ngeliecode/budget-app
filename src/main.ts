@@ -237,10 +237,11 @@ false = finns
 ! = 
 if (..) = villkoret 
 return = Avbryt (om villkoret är true?)
+if-sats --> säkerhetsåtgärd?
 */
-  if (!balanceEl) return;
+  if (!balanceNumber) return;
 
-  // Gör en variabel som håller funktionen som räknar ut balansen
+  /*// Gör en variabel som håller funktionen som räknar ut balansen
   const balance = calculateBalance();
   balanceEl.textContent = `Balans: ${balance} kr`;
 
