@@ -51,8 +51,83 @@ addIncomeItemBtn?.addEventListener("click", createIncomeBudgetPostOnClick);
 addExpenseItemBtn?.addEventListener("click", createExpenseBudgetPostOnClick);
 
 // =================================================================================
-// FUNKTIONER ======================================================================
+// LOGIK FUNKTIONER ================================================================
 // =================================================================================
+
+// Räkna balansen
+function calculateBalance() {
+  let totalIncome = 0;
+  let totalExpense = 0;
+
+  incomes.forEach((post) => {
+    totalIncome += post.amount;
+  });
+
+  expenses.forEach((post) => {
+    totalExpense += post.amount;
+  });
+
+  // inkomst - utgift
+  return totalIncome - totalExpense;
+}
+
+// =================================================================================
+// FUNKTIONER SOM MANIPULERAR HTML =================================================
+// =================================================================================
+
+// Rendera balansen (visa den på sidan och sätt rätt färg)
+function renderBalance() {
+  /* Avbryt funktionen om villkoret är sant.
+true = finns inte (null eller undefined?)
+false = finns 
+! = truthy/falsy?? Skyddar mot allt?
+if = Villkoret 
+if (..) = Om elementet är true...
+return = avbryt
+if-sats --> säkerhetsåtgärd (sidan kan krasha annars)
+=== strict equality = Om två nånting är lika returneras true? Skyddar inte mot allt?
+Jag borde ha if + return på alla funktioner som manipulerar dom-element? Ja. 
+intern data -> lever i minnet?
+*/
+  if (!balanceNumber) return;
+  console.log("Balanssumman finns :) ");
+  // Kör funktionen som räknar ut balansen och spara resultatet i en variabel
+  const balance = calculateBalance();
+
+  /*
+  textContent = egenskap på dom-element (varför inte innerHTML? 
+  För att texten kommer från användaren. 
+  balanceNumber.textContent = `Balans: ${balance} kr`;
+  
+  innerHTML = "parses its input as HTML" (injektion!)
+  textContent = Bara text?Använd när... 
+  innerText =  "takes CSS styles into account" */
+
+  /*eftersom balanceNumber pekar på ett dom-element 
+
+<p id=balanceNumber><!--- funktionen renderBalance renderar ut ett nummer som calculateBalance har kommit fram till/manipulerar numret som redan finns--></p>
+
+vart är kopplingen till inputs?*/
+
+  /*
+  // Ta bort gamla klasser
+  balanceEl.classList.remove(
+    "balance-positive",
+    "balance-negative",
+    "balance-zero"
+  );
+
+  // Lägg till rätt klass
+  if (balance > 0) {
+    balanceEl.classList.add("balance-positive");
+  } else if (balance < 0) {
+    balanceEl.classList.add("balance-negative");
+  } else {
+    balanceEl.classList.add("balance-zero");
+  }*/
+
+  // Jag anropar funktionen då..
+}
 
 // Läs in, spara och skapa budgetpost av inmatat värde (data)
 function createIncomeBudgetPostOnClick() {
@@ -207,73 +282,6 @@ function loadFromLocalStorage() {
   if (savedExpenses) {
     expenses.push(...JSON.parse(savedExpenses));
   }
-}
-
-// -------------------------------------------------------------------------------
-// BALANS ------------------------------------------------------------------------
-
-// Räkna balansen
-function calculateBalance() {
-  let totalIncome = 0;
-  let totalExpense = 0;
-
-  incomes.forEach((post) => {
-    totalIncome += post.amount;
-  });
-
-  expenses.forEach((post) => {
-    totalExpense += post.amount;
-  });
-
-  // inkomst - utgift
-  return totalIncome - totalExpense;
-}
-
-// Rendera balansen (visa den på sidan och sätt rätt färg)
-function renderBalance() {
-  /* Avbryt funktionen om villkoret är sant.
-true = finns inte (null eller undefined?)
-false = finns 
-! = truthy/falsy?? Skyddar mot allt?
-if = Villkoret 
-if (..) = Om elementet är true...
-return = avbryt
-if-sats --> säkerhetsåtgärd (sidan kan krasha annars)
-=== strict equality = Om två nånting är lika returneras true? Skyddar inte mot allt?
-Jag borde ha if + return på alla funktioner som manipulerar dom-element? Ja. 
-intern data -> lever i minnet?
-*/
-  if (!balanceNumber) return;
-  console.log("Balanssumman finns :) ");
-  // Kör funktionen som räknar ut balansen och spara resultatet i en variabel
-  const balance = calculateBalance();
-
-  /*
-  textContent = egenskap på dom-element (varför inte innerHTML? 
-  För att texten kommer från användaren. Vad spelar det för roll?) 
-  balanceNumber.textContent = `Balans: ${balance} kr`;
-  
-  innerHTML = Använd när...
-  textContent = Använd när... */
-
-  /*
-  // Ta bort gamla klasser
-  balanceEl.classList.remove(
-    "balance-positive",
-    "balance-negative",
-    "balance-zero"
-  );
-
-  // Lägg till rätt klass
-  if (balance > 0) {
-    balanceEl.classList.add("balance-positive");
-  } else if (balance < 0) {
-    balanceEl.classList.add("balance-negative");
-  } else {
-    balanceEl.classList.add("balance-zero");
-  }*/
-
-  // Jag anropar funktionen då..
 }
 
 // =================================================================================
