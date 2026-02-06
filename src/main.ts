@@ -40,7 +40,7 @@ const incomeList = document.querySelector("#incomeList");
 const expenseList = document.querySelector("#expenseList");
 
 // Balans
-const balanceEl = document.querySelector("#balance");
+const balanceNumber = document.querySelector("#balanceNumber");
 
 // =================================================================================
 // EVENT-LYSSNARE ==================================================================
@@ -229,12 +229,39 @@ function calculateBalance() {
   return totalIncome - totalExpense;
 }
 
-// Rendera balansen
+// Rendera balansen (visa den på sidan och sätt rätt färg)
 function renderBalance() {
+  /* Avbryt funktionen om villkoret är sant.
+true = finns inte (null eller undefined?)
+false = finns 
+! = 
+if (..) = villkoret 
+return = Avbryt (om villkoret är true?)
+*/
   if (!balanceEl) return;
 
+  // Gör en variabel som håller funktionen som räknar ut balansen
   const balance = calculateBalance();
   balanceEl.textContent = `Balans: ${balance} kr`;
+
+  /*
+  // Ta bort gamla klasser
+  balanceEl.classList.remove(
+    "balance-positive",
+    "balance-negative",
+    "balance-zero"
+  );
+
+  // Lägg till rätt klass
+  if (balance > 0) {
+    balanceEl.classList.add("balance-positive");
+  } else if (balance < 0) {
+    balanceEl.classList.add("balance-negative");
+  } else {
+    balanceEl.classList.add("balance-zero");
+  }*/
+
+  // Jag anropar funktionen då..
 }
 
 // =================================================================================
