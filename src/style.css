@@ -58,7 +58,8 @@ button:hover {
   color: white;
 }
 
-/*
+/* balanceNumber */
+
 .balance-positive {
   color: green;
 }
@@ -69,4 +70,4 @@ button:hover {
 
 .balance-zero {
   color: gray;
-}*/
+}

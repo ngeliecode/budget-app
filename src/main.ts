@@ -4,21 +4,21 @@ import "./style.css";
 import categories from "./categories.json";
 
 // =================================================================================
-// localStorage ====================================================================
+// DATA ====================================================================
 // =================================================================================
 
 /*
 Här är listorna med data (värden från inputs och select) 
 som ska sparas i localStorage.
-
-"const" låser arrayen, inte innehållet
 */
 
 const incomes = [];
 const expenses = [];
 
+// "const" låser arrayen, inte innehållet
+
 // =================================================================================
-// VARIABLER / QUERY-SELECTORS =====================================================
+// VARIABLER / QUERY-SELECTORS / DOM-ELEMENT =======================================
 // =================================================================================
 
 // Definiera globala variabler som pekar på "Lägg till" knapparna
@@ -29,7 +29,7 @@ const addExpenseItemBtn = document.querySelector("#addExpenseItemBtn");
 const incomeCategorySelect = document.querySelector("#incomeCategory");
 const expenseCategorySelect = document.querySelector("#expenseCategory");
 
-// Definiera globala variabler som pekar på input-fälten
+// input-fälten
 const incomeDescriptionInput = document.querySelector("#incomeDescription");
 const expenseDescriptionInput = document.querySelector("#expenseDescription");
 const incomeAmountInput = document.querySelector("#incomeAmount");
@@ -51,10 +51,36 @@ addIncomeItemBtn?.addEventListener("click", createIncomeBudgetPostOnClick);
 addExpenseItemBtn?.addEventListener("click", createExpenseBudgetPostOnClick);
 
 // =================================================================================
+// FUNKTIONER SOM HANTERAR DATA ====================================================
+// =================================================================================
+
+/* Dessa funktioner rör inte DOM
+Jobbar med appens minne */
+
+function saveToLocalStorage() {
+  // Gör om arrayer till strings (text) och spara dom till localStorage
+  localStorage.setItem("incomes", JSON.stringify(incomes));
+  localStorage.setItem("expenses", JSON.stringify(expenses));
+}
+
+function loadFromLocalStorage() {
+  // Hämta sparad data och gör om text --> objekt och lägg i array
+  const savedIncomes = localStorage.getItem("incomes");
+  const savedExpenses = localStorage.getItem("expenses");
+
+  if (savedIncomes) {
+    incomes.push(...JSON.parse(savedIncomes));
+  }
+
+  if (savedExpenses) {
+    expenses.push(...JSON.parse(savedExpenses));
+  }
+}
+
+// =================================================================================
 // LOGIK FUNKTIONER ================================================================
 // =================================================================================
 
-// Räkna balansen
 function calculateBalance() {
   let totalIncome = 0;
   let totalExpense = 0;
@@ -72,64 +98,130 @@ function calculateBalance() {
 }
 
 // =================================================================================
-// FUNKTIONER SOM MANIPULERAR HTML =================================================
+// MANIPULERAR DOM-ELEMENT / UI ====================================================
 // =================================================================================
 
-// Rendera balansen (visa den på sidan och sätt rätt färg)
+/* Dessa rör HTML, använder
+textContent, innerHTML, classList */
+
+// Visa på sidan med rätt färg
 function renderBalance() {
-  /* Avbryt funktionen om villkoret är sant.
-true = finns inte (null eller undefined?)
+  /* 
+Avbryt funktionen om villkoret är sant.
+if-sats --> säkerhetsåtgärd (sidan kan krasha annars)
+true = finns inte 
 false = finns 
-! = truthy/falsy?? Skyddar mot allt?
 if = Villkoret 
 if (..) = Om elementet är true...
 return = avbryt
-if-sats --> säkerhetsåtgärd (sidan kan krasha annars)
-=== strict equality = Om två nånting är lika returneras true? Skyddar inte mot allt?
-Jag borde ha if + return på alla funktioner som manipulerar dom-element? Ja. 
-intern data -> lever i minnet?
 */
   if (!balanceNumber) return;
   console.log("Balanssumman finns :) ");
   // Kör funktionen som räknar ut balansen och spara resultatet i en variabel
   const balance = calculateBalance();
-
-  /*
-  textContent = egenskap på dom-element (varför inte innerHTML? 
-  För att texten kommer från användaren. 
+  // Sätt text i ett befintligt element som finns i html-filen
   balanceNumber.textContent = `Balans: ${balance} kr`;
-  
-  innerHTML = "parses its input as HTML" (injektion!)
-  textContent = Bara text?Använd när... 
-  innerText =  "takes CSS styles into account" */
 
-  /*eftersom balanceNumber pekar på ett dom-element 
-
-<p id=balanceNumber><!--- funktionen renderBalance renderar ut ett nummer som calculateBalance har kommit fram till/manipulerar numret som redan finns--></p>
-
-vart är kopplingen till inputs?*/
-
-  /*
-  // Ta bort gamla klasser
-  balanceEl.classList.remove(
+  // Rensa bort css-färg från äldre beräkning
+  balanceNumber.classList.remove(
     "balance-positive",
     "balance-negative",
     "balance-zero"
   );
 
-  // Lägg till rätt klass
+  // Lägg till rätt färg (class)
   if (balance > 0) {
-    balanceEl.classList.add("balance-positive");
+    // Om balance är positiv -> lägg till klassen med grön färg
+    balanceNumber.classList.add("balance-positive");
   } else if (balance < 0) {
-    balanceEl.classList.add("balance-negative");
+    // om balance är negativ -> lägg till klassen med röd färg
+    balanceNumber.classList.add("balance-negative");
+    // om balance varken är > 0 eller < 0 ...
   } else {
-    balanceEl.classList.add("balance-zero");
-  }*/
+    balanceNumber.classList.add("balance-zero");
+  }
 
-  // Jag anropar funktionen då..
+  // Jag anropar funktionen varje gång datan som påverkar balansen ändras
 }
 
-// Läs in, spara och skapa budgetpost av inmatat värde (data)
+// Visa i <ul> - (kategori, beskrivning + belopp)
+function renderIncomeBudgetPost() {
+  if (!incomeList) return;
+
+  console.log("renderIncomeBudgetPost körs");
+
+  // Ingen html tolkas
+  /* const li = document.createElement("li");
+li.textContent = `${post.description} - ${post.amount}`;
+incomeList.appendChild(li); */
+
+  /* const li = document.createElement("li");
+const span = document.createElement("span");
+
+span.textContent = `${post.description} - ${post.amount}`;
+
+li.appendChild(span);
+incomeList.appendChild(li);*/
+
+  let html = "";
+
+  incomes.forEach((budgetPost, index) => {
+    html += `
+      <li>${budgetPost.category}: ${budgetPost.description} - ${budgetPost.amount} kr
+        <button class="delete-income" data-id="${index}">Radera</button>
+      </li>`;
+  });
+
+  incomeList.innerHTML = html;
+
+  document.querySelectorAll("button.delete-income").forEach((btn) => {
+    btn.addEventListener("click", deleteIncomeBudgetPost);
+  });
+}
+
+function renderExpenseBudgetPost() {
+  if (!expenseList) return;
+
+  let html = "";
+
+  expenses.forEach((budgetPost, index) => {
+    html += `
+      <li>
+        ${budgetPost.category}: ${budgetPost.description} - ${budgetPost.amount}
+        <button class="delete-expense" data-id="${index}">Radera</button>
+      </li>`;
+  });
+
+  expenseList.innerHTML = html;
+
+  document.querySelectorAll("button.delete-expense").forEach((btn) => {
+    btn.addEventListener("click", deleteExpenseBudgetPost);
+  });
+}
+
+// Visa options i dropdown
+function renderCategoryOptions(selectDropdown, categories) {
+  // Kolla så att dropdown-listan finns
+  if (!selectDropdown) return;
+  // Skapa en tom option
+  let html = `<option value="">Välj kategori</option>`;
+  // Gå igenom varje kategori i json
+  categories.forEach((category) => {
+    // Skapa <option>
+    html += `<option value="${category.value}">${category.text}</option>`;
+  });
+  // rendera ut i <select>
+  selectDropdown.innerHTML = html;
+}
+
+// =================================================================================
+// INTERAKTION =====================================================================
+// =================================================================================
+
+/* Kör kod baserat på användarens inputs och klick 
+Det är användaren som triggar funktionerna */
+
+// Skapa post av inmatad data
 function createIncomeBudgetPostOnClick() {
   console.log("Inkomst-knappen funkar!");
   // 1. läs värde från dropdown-lista och spara dom i lokala variabler
@@ -180,49 +272,6 @@ function createExpenseBudgetPostOnClick() {
   renderBalance();
 }
 
-// Rendera budgetposter i <ul> - (kategori, beskrivning + belopp)
-function renderIncomeBudgetPost() {
-  if (!incomeList) return;
-
-  console.log("renderIncomeBudgetPost körs");
-
-  let html = "";
-
-  incomes.forEach((budgetPost, index) => {
-    html += `
-      <li>${budgetPost.category}: ${budgetPost.description} - ${budgetPost.amount} kr
-        <button class="delete-income" data-id="${index}">Radera</button>
-      </li>`;
-  });
-
-  incomeList.innerHTML = html;
-
-  document.querySelectorAll("button.delete-income").forEach((btn) => {
-    btn.addEventListener("click", deleteIncomeBudgetPost);
-  });
-}
-
-function renderExpenseBudgetPost() {
-  if (!expenseList) return;
-
-  let html = "";
-
-  expenses.forEach((budgetPost, index) => {
-    html += `
-      <li>
-        ${budgetPost.category}: ${budgetPost.description} - ${budgetPost.amount}
-        <button class="delete-expense" data-id="${index}">Radera</button>
-      </li>`;
-  });
-
-  expenseList.innerHTML = html;
-
-  document.querySelectorAll("button.delete-expense").forEach((btn) => {
-    btn.addEventListener("click", deleteExpenseBudgetPost);
-  });
-}
-
-// Radera budgetposter
 function deleteIncomeBudgetPost(event) {
   const id = Number(event.target.dataset.id);
 
@@ -239,49 +288,6 @@ function deleteExpenseBudgetPost(event) {
   saveToLocalStorage();
   renderExpenseBudgetPost();
   renderBalance();
-}
-
-// -------------------------------------------------------------------------------
-// DROPDOWN ----------------------------------------------------------------------
-
-// Rendera options till dropdown (select)
-function renderCategoryOptions(selectDropdown, categories) {
-  // Kolla så att dropdown-listan finns
-  if (!selectDropdown) return;
-  // Skapa en tom option
-  let html = `<option value="">Välj kategori</option>`;
-  // Gå igenom varje kategori i json
-  categories.forEach((category) => {
-    // Skapa <option>
-    html += `<option value="${category.value}">${category.text}</option>`;
-  });
-  // rendera ut i <select>
-  selectDropdown.innerHTML = html;
-}
-
-// -------------------------------------------------------------------------------
-// LOCAL STORAGE -----------------------------------------------------------------
-
-// Spara till localStorage
-function saveToLocalStorage() {
-  // Gör om arrayer till strings (text) och spara dom till localStorage
-  localStorage.setItem("incomes", JSON.stringify(incomes));
-  localStorage.setItem("expenses", JSON.stringify(expenses));
-}
-
-// Läs från localStorage
-function loadFromLocalStorage() {
-  // Hämta sparad data och gör om text --> objekt och lägg i array
-  const savedIncomes = localStorage.getItem("incomes");
-  const savedExpenses = localStorage.getItem("expenses");
-
-  if (savedIncomes) {
-    incomes.push(...JSON.parse(savedIncomes));
-  }
-
-  if (savedExpenses) {
-    expenses.push(...JSON.parse(savedExpenses));
-  }
 }
 
 // =================================================================================
