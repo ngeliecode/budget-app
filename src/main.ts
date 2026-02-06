@@ -234,22 +234,27 @@ function renderBalance() {
   /* Avbryt funktionen om villkoret är sant.
 true = finns inte (null eller undefined?)
 false = finns 
-! = truthy/falsy??
+! = truthy/falsy?? Skyddar mot allt?
 if = Villkoret 
 if (..) = Om elementet är true...
 return = avbryt
 if-sats --> säkerhetsåtgärd (sidan kan krasha annars)
-=== strict equality = Om två nånting är lika returneras ett boolean resultat
-olika typer -> returnera false
+=== strict equality = Om två nånting är lika returneras true? Skyddar inte mot allt?
 Jag borde ha if + return på alla funktioner som manipulerar dom-element? Ja. 
-intern data -> globala variabler? -> lever i minnet?
+intern data -> lever i minnet?
 */
   if (!balanceNumber) return;
   console.log("Balanssumman finns :) ");
-
-  /*// Gör en variabel som håller funktionen som räknar ut balansen
+  // Kör funktionen som räknar ut balansen och spara resultatet i en variabel
   const balance = calculateBalance();
-  balanceEl.textContent = `Balans: ${balance} kr`;
+
+  /*
+  textContent = egenskap på dom-element (varför inte innerHTML? 
+  För att texten kommer från användaren. Vad spelar det för roll?) 
+  balanceNumber.textContent = `Balans: ${balance} kr`;
+  
+  innerHTML = Använd när...
+  textContent = Använd när... */
 
   /*
   // Ta bort gamla klasser
