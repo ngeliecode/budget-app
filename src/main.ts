@@ -42,6 +42,9 @@ const expenseList = document.querySelector("#expenseList");
 // Balans
 const balanceNumber = document.querySelector("#balanceNumber");
 
+// Tema
+const themeToggleBtn = document.querySelector("#themeToggle");
+
 // =================================================================================
 // EVENT-LYSSNARE ==================================================================
 // =================================================================================
@@ -49,6 +52,9 @@ const balanceNumber = document.querySelector("#balanceNumber");
 // Lyssna efter klick på "Lägg till" knappar
 addIncomeItemBtn?.addEventListener("click", createIncomeBudgetPostOnClick);
 addExpenseItemBtn?.addEventListener("click", createExpenseBudgetPostOnClick);
+
+// Tema
+themeToggleBtn.addEventListener("click", toggleTheme);
 
 // =================================================================================
 // FUNKTIONER SOM HANTERAR DATA ====================================================
@@ -142,6 +148,10 @@ return = avbryt
   }
 
   // Jag anropar funktionen varje gång datan som påverkar balansen ändras
+}
+
+function toggleTheme() {
+  document.body.classList.toggle("dark");
 }
 
 // Visa i <ul> - (kategori, beskrivning + belopp)

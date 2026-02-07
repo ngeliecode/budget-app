@@ -1,15 +1,117 @@
-:root {
-  --border-color: #ccc;
-}
-
 body {
   margin: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: #444;
 }
 
-main {
-  padding: 1rem;
+/* ================================================================================= 
+/* THEME =========================================================================
+/* ================================================================================= */
+
+/* Light mode (default) */
+body {
+  background-color: white;
+  color: black;
+}
+
+/* Dark mode */
+body.dark {
+  background-color: rgb(59, 46, 62);
+  color: white;
+}
+
+header {
+  background-color: black;
+  color: white;
+}
+
+.dark header {
+  background-color: rgb(44, 30, 48);
+  color: black;
+}
+
+.btn {
+  background-color: rgb(72, 194, 225);
+  color: white;
+}
+
+select {
+  background-color: white;
+}
+
+.dark select,
+.dark input {
+  background-color: rgb(72, 56, 75);
+}
+
+/* ================================================================================= 
+/* FONT =========================================================================
+/* ================================================================================= */
+
+body,
+select,
+input,
+button {
+  font-family: "Fira Code", monospace;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+/* ================================================================================= 
+/* BUTTONS =========================================================================
+/* ================================================================================= */
+
+.btn {
+  margin-block: 0.25rem;
+  padding-block: 0.5rem;
+  padding-inline: 0.8rem;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+button:hover {
+  background-color: black;
+  color: white;
+}
+
+.theme-toggle {
+  width: 2.5rem;
+  height: 2.5rem;
+  fill: white;
+  background-color: black;
+  border: none;
+}
+
+.theme-toggle:hover {
+  cursor: cursor;
+  fill: turquoise;
+}
+
+select {
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin-inline: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 2px solid rgb(72, 194, 225);
+}
+
+input {
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 2px solid rgb(72, 194, 225);
+}
+
+/* ================================================================================= 
+/* HEADER ========================================================================== 
+/* ================================================================================= */
+
+header {
+  padding: 0.5rem;
 }
 
 h1 {
@@ -17,14 +119,13 @@ h1 {
   margin: 0;
 }
 
-header {
-  background-color: rgb(61, 87, 146);
-  color: white;
+body.dark .wavy-header {
+  fill: rgb(44, 30, 48);
 }
 
-section {
-  margin-block: 0.25rem;
-}
+/* ================================================================================= 
+/* MAIN ========================================================================== 
+/* ================================================================================= */
 
 div {
   display: flex;
@@ -36,29 +137,14 @@ label {
   margin-block: 0.25rem;
 }
 
-input {
-  padding: 0.25rem;
-  border: 1px solid var(--border-color);
-}
+/* ================================================================================= 
+/* BALANCE ========================================================================== 
+/* ================================================================================= */
 
-button {
-  margin-block: 0.25rem;
-  padding-block: 0.3rem;
-  padding-inline: 0.6rem;
-  background-color: rgb(61, 87, 146);
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+.balance {
+  padding: 1rem;
+  background-color: rgb(72, 194, 225);
 }
-
-button:hover {
-  background-color: black;
-  color: white;
-}
-
-/* balanceNumber */
 
 .balance-positive {
   color: green;
