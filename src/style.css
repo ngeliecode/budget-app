@@ -1,3 +1,8 @@
+:root {
+  --border-glow: inset 0 0 12px rgba(167, 235, 242, 0.35),
+    0 0 25px rgba(233, 179, 255, 0.45), 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
 body {
   margin: 0;
 }
@@ -5,6 +10,16 @@ body {
 /* ================================================================================= 
 /* THEME =========================================================================
 /* ================================================================================= */
+
+.app {
+  max-width: 420px; /* typisk mobilbredd */
+  margin: 0 auto; /* centrerar på desktop */
+  padding: 1rem;
+}
+
+.dark .app {
+  background-color: #023859;
+}
 
 /* Light mode (default) */
 body {
@@ -14,7 +29,7 @@ body {
 
 /* Dark mode */
 body.dark {
-  background-color: rgb(59, 46, 62);
+  background-color: black;
   color: white;
 }
 
@@ -24,13 +39,21 @@ header {
 }
 
 .dark header {
-  background-color: rgb(44, 30, 48);
-  color: black;
+  background-color: #011c40;
+  color: white;
+}
+
+.dark .wavy-header {
+  fill: #011c40;
 }
 
 .btn {
-  background-color: rgb(72, 194, 225);
+  background-color: #7b337e;
   color: white;
+}
+
+.dark .btn:hover {
+  box-shadow: var(--border-glow);
 }
 
 select {
@@ -39,7 +62,22 @@ select {
 
 .dark select,
 .dark input {
-  background-color: rgb(72, 56, 75);
+  background-color: #023859;
+  border: 1px solid #a7ebf2;
+  color: white;
+}
+
+.dark select:hover,
+.dark input:hover {
+  border: 3px solid #7b337e;
+  box-shadow: var(--border-glow);
+}
+
+.dark select:focus,
+.dark input:focus {
+  outline: none;
+  border-color: #7b337e;
+  box-shadow: 0 0 0 3px rgba(123, 51, 126, 0.45);
 }
 
 /* ================================================================================= 
@@ -66,7 +104,8 @@ button {
   border: none;
   border-radius: 1rem;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 0.7rem;
   text-transform: uppercase;
 }
 
@@ -90,20 +129,40 @@ button:hover {
 
 select {
   border-radius: 1rem;
-  padding: 0.5rem;
+  padding: 0.7rem;
   margin-inline: 2rem;
   font-weight: 700;
+  font-size: 0.7rem;
   text-transform: uppercase;
   border: 2px solid rgb(72, 194, 225);
 }
 
+h2,
+p,
+select,
+input,
+label,
+.btn {
+  margin-inline: 2rem;
+}
+
 input {
-  padding: 0.5rem;
+  margin-inline: 2rem;
+  padding: 0.7rem;
   border: 1px solid var(--border-color);
   border-radius: 1rem;
   font-weight: 700;
+  font-size: 0.7rem;
   text-transform: uppercase;
   border: 2px solid rgb(72, 194, 225);
+}
+
+/* ================================================================================= 
+/* APP ========================================================================== 
+/* ================================================================================= */
+
+.app {
+  padding: 0;
 }
 
 /* ================================================================================= 
@@ -112,15 +171,12 @@ input {
 
 header {
   padding: 0.5rem;
+  text-align: center;
 }
 
 h1 {
   padding: 1rem;
   margin: 0;
-}
-
-body.dark .wavy-header {
-  fill: rgb(44, 30, 48);
 }
 
 /* ================================================================================= 
@@ -157,3 +213,7 @@ label {
 .balance-zero {
   color: gray;
 }
+
+/* ================================================================================= 
+/* BALANCE ========================================================================== 
+/* ================================================================================= */
