@@ -1,219 +1,273 @@
 :root {
   --border-glow: inset 0 0 12px rgba(167, 235, 242, 0.35),
     0 0 25px rgba(233, 179, 255, 0.45), 0 8px 30px rgba(0, 0, 0, 0.35);
-}
-
-body {
-  margin: 0;
+  --colour-dark: rgb(207, 207, 207);
 }
 
 /* ================================================================================= 
-/* THEME =========================================================================
+/* RESET =========================================================================
 /* ================================================================================= */
 
-.app {
-  max-width: 420px; /* typisk mobilbredd */
-  margin: 0 auto; /* centrerar på desktop */
-  padding: 1rem;
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
 
-.dark .app {
-  background-color: #023859;
-}
+/* ================================================================================= 
+/* GLOBAL =========================================================================
+/* ================================================================================= */
 
-/* Light mode (default) */
 body {
-  background-color: white;
-  color: black;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Dark mode */
+/* ================================================================================= 
+/* THEME ( LIGHT / DARK )=========================================================================
+/* ================================================================================= */
+
+body {
+  background-color: #d4d9db;
+  color: var(--colour-dark);
+}
+
 body.dark {
-  background-color: black;
-  color: white;
+  background: #2a689b;
+  background: radial-gradient(
+    circle,
+    rgba(42, 104, 155, 1) 0%,
+    rgba(22, 30, 77, 1) 100%
+  );
+  color: var(--colour-dark);
 }
 
+/* HEADER - THEME */
 header {
-  background-color: black;
-  color: white;
+  background-color: rgb(18, 9, 85);
 }
 
 .dark header {
-  background-color: #011c40;
+  background-color: #102061;
   color: white;
 }
 
-.dark .wavy-header {
-  fill: #011c40;
+/* Light mode */
+.light .svg--moon-icon {
+  stroke: white;
+}
+
+.dark .svg--sun-icon {
+  stroke: var(--colour-dark);
+  background-color: #102061;
 }
 
 .btn {
-  background-color: #7b337e;
+  background-color: #514dcd;
   color: white;
 }
 
-.dark .btn:hover {
-  box-shadow: var(--border-glow);
+.theme-toggle {
+  fill: white;
+  background-color: black;
+  border: none;
 }
 
-select {
-  background-color: white;
+/* APP - VISUAL / THEME */
+.app {
+  background: rgba(10, 30, 60, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  /*border-radius: 0;*/
+  border: 1px solid rgba(167, 235, 242, 0.2);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45),
+    0 0 40px rgba(167, 235, 242, 0.15);
+}
+
+.dark .app {
+  background-color: #15185b;
 }
 
 .dark select,
 .dark input {
-  background-color: #023859;
-  border: 1px solid #a7ebf2;
-  color: white;
+  background-color: #202d6d;
+  color: var(--colour-dark);
+  border: none;
 }
 
 .dark select:hover,
-.dark input:hover {
-  border: 3px solid #7b337e;
+.dark input:hover,
+.dark .btn:hover {
   box-shadow: var(--border-glow);
 }
 
 .dark select:focus,
 .dark input:focus {
   outline: none;
-  border-color: #7b337e;
-  box-shadow: 0 0 0 3px rgba(123, 51, 126, 0.45);
+  border: 1px solid #a7ebf2;
+}
+
+.dark .wave {
+  fill: #102061;
+  fill-opacity: "1";
+}
+
+.dark .balance {
+  background-color: #202d6d;
 }
 
 /* ================================================================================= 
-/* FONT =========================================================================
-/* ================================================================================= */
-
-body,
-select,
-input,
-button {
-  font-family: "Fira Code", monospace;
-  font-optical-sizing: auto;
-  font-style: normal;
-}
-
-/* ================================================================================= 
-/* BUTTONS =========================================================================
-/* ================================================================================= */
-
-.btn {
-  margin-block: 0.25rem;
-  padding-block: 0.5rem;
-  padding-inline: 0.8rem;
-  border: none;
-  border-radius: 1rem;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-}
-
-button:hover {
-  background-color: black;
-  color: white;
-}
-
-.theme-toggle {
-  width: 2.5rem;
-  height: 2.5rem;
-  fill: white;
-  background-color: black;
-  border: none;
-}
-
-.theme-toggle:hover {
-  cursor: cursor;
-  fill: turquoise;
-}
-
-select {
-  border-radius: 1rem;
-  padding: 0.7rem;
-  margin-inline: 2rem;
-  font-weight: 700;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  border: 2px solid rgb(72, 194, 225);
-}
-
-h2,
-p,
-select,
-input,
-label,
-.btn {
-  margin-inline: 2rem;
-}
-
-input {
-  margin-inline: 2rem;
-  padding: 0.7rem;
-  border: 1px solid var(--border-color);
-  border-radius: 1rem;
-  font-weight: 700;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  border: 2px solid rgb(72, 194, 225);
-}
-
-/* ================================================================================= 
-/* APP ========================================================================== 
+/* LAYOUT ========================================================================== 
 /* ================================================================================= */
 
 .app {
+  width: 100%;
+  height: 100vh;
+  overflow-y: auto; /* scroll */
   padding: 0;
 }
 
-/* ================================================================================= 
-/* HEADER ========================================================================== 
-/* ================================================================================= */
-
 header {
   padding: 0.5rem;
-  text-align: center;
 }
 
 h1 {
   padding: 1rem;
   margin: 0;
+  text-align: center;
+}
+
+section {
+  margin-inline: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 32em) {
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .app {
+    width: 100%;
+    max-width: 26.25rem; /* 420 px */
+    height: 85vh;
+    border-radius: 1.5rem;
+    overflow-y: auto;
+  }
 }
 
 /* ================================================================================= 
-/* MAIN ========================================================================== 
+/* FORM - LAYOUT ========================================================================== 
 /* ================================================================================= */
 
-div {
+form {
+  display: grid;
+  gap: 1rem;
+}
+
+.category,
+.description,
+.amount {
   display: flex;
   flex-direction: column;
-  margin-block: 0.25rem;
-}
-
-label {
-  margin-block: 0.25rem;
 }
 
 /* ================================================================================= 
-/* BALANCE ========================================================================== 
+/* KOMPONENTER =========================================================================
 /* ================================================================================= */
 
-.balance {
-  padding: 1rem;
-  background-color: rgb(72, 194, 225);
+.theme-toggle {
+  width: 2rem;
+  height: 2rem;
+  position: relative;
 }
 
+/* Göm båda ikonerna som default */
+.theme-toggle .svg--sun-icon,
+.theme-toggle .svg--moon-icon {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Light mode */
+.light .svg--moon-icon {
+  opacity: 1;
+  transform: rotate(0deg);
+}
+
+.dark .svg--sun-icon {
+  opacity: 1;
+  transform: rotate(0deg);
+}
+
+select,
+input,
+.btn {
+  border-radius: 2rem;
+  border: none;
+  cursor: pointer;
+  padding: 0.7rem;
+  font-weight: 700;
+  /*text-transform: uppercase;*/
+}
+
+.budgetpost-list {
+  margin-top: 2rem;
+  padding-block: 1rem;
+  border-radius: 2rem;
+  background-color: #4a3e64;
+  list-style: none;
+  padding-left: 1rem;
+}
+
+.budgetpost__item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.balance {
+  width: 7rem;
+  height: 7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  padding: 0.7rem;
+  text-align: center;
+  margin: 2rem auto; /* auto vänster och höger */
+  /* mjuk övergång mellan färgbyten */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ================================================================================= 
+/* FEEDBACK ========================================================================== 
+/* ================================================================================= */
+
 .balance-positive {
-  color: green;
+  background-color: rgba(0, 180, 120, 0.2);
+  color: #00e0a4;
+  box-shadow: 0 0 0 3px rgba(0, 224, 164, 0.6);
 }
 
 .balance-negative {
-  color: red;
+  background-color: rgba(200, 50, 50, 0.25);
+  color: #ff6b6b;
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.6);
 }
 
 .balance-zero {
-  color: gray;
+  background-color: rgba(150, 150, 150, 0.2);
+  color: #cccccc;
+  box-shadow: 0 0 0 3px rgba(200, 200, 200, 0.5);
 }
-
-/* ================================================================================= 
-/* BALANCE ========================================================================== 
-/* ================================================================================= */

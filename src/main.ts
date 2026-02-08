@@ -12,10 +12,8 @@ Här är listorna med data (värden från inputs och select)
 som ska sparas i localStorage.
 */
 
-const incomes = [];
-const expenses = [];
-
-// "const" låser arrayen, inte innehållet
+let incomes = [];
+let expenses = [];
 
 // =================================================================================
 // VARIABLER / QUERY-SELECTORS / DOM-ELEMENT =======================================
@@ -43,7 +41,7 @@ const expenseList = document.querySelector("#expenseList");
 const balanceNumber = document.querySelector("#balanceNumber");
 
 // Tema
-const themeToggleBtn = document.querySelector("#themeToggle");
+const themeToggleBtn = document.querySelector(".theme-toggle");
 
 // =================================================================================
 // EVENT-LYSSNARE ==================================================================
@@ -54,7 +52,10 @@ addIncomeItemBtn?.addEventListener("click", createIncomeBudgetPostOnClick);
 addExpenseItemBtn?.addEventListener("click", createExpenseBudgetPostOnClick);
 
 // Tema
-themeToggleBtn.addEventListener("click", toggleTheme);
+themeToggleBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+  document.body.classList.toggle("light");
+});
 
 // =================================================================================
 // FUNKTIONER SOM HANTERAR DATA ====================================================
@@ -103,6 +104,27 @@ function calculateBalance() {
   return totalIncome - totalExpense;
 }
 
+// Gruppera budgetpost inför rendering
+function groupByCategory(posts) {
+  // Skapa ett tomt objekt
+  const grouped = {};
+  // Gå igenom varje budgetpost
+  posts.forEach((post) => {
+    // Om kategorin inte finns --> skapa den
+    if (!grouped[post.categoryValue]) {
+      grouped[post.categoryValue] = {
+        categoryValue: post.categoryValue,
+        categoryText: post.categoryText,
+        items: [],
+      };
+    }
+    // Lägg till posten i rätt kategori
+    grouped[post.categoryValue].items.push(post);
+  });
+  // Returnera objektet
+  return grouped;
+}
+
 // =================================================================================
 // MANIPULERAR DOM-ELEMENT / UI ====================================================
 // =================================================================================
@@ -126,7 +148,7 @@ return = avbryt
   // Kör funktionen som räknar ut balansen och spara resultatet i en variabel
   const balance = calculateBalance();
   // Sätt text i ett befintligt element som finns i html-filen
-  balanceNumber.textContent = `Balans: ${balance} kr`;
+  balanceNumber.textContent = `${balance} kr`;
 
   // Rensa bort css-färg från äldre beräkning
   balanceNumber.classList.remove(
@@ -150,66 +172,91 @@ return = avbryt
   // Jag anropar funktionen varje gång datan som påverkar balansen ändras
 }
 
-function toggleTheme() {
-  document.body.classList.toggle("dark");
-}
-
-// Visa i <ul> - (kategori, beskrivning + belopp)
+// Visa i <ul> - (kategori: beskrivning + belopp)
 function renderIncomeBudgetPost() {
   if (!incomeList) return;
 
-  console.log("renderIncomeBudgetPost körs");
-
-  // Ingen html tolkas
-  /* const li = document.createElement("li");
-li.textContent = `${post.description} - ${post.amount}`;
-incomeList.appendChild(li); */
-
-  /* const li = document.createElement("li");
-const span = document.createElement("span");
-
-span.textContent = `${post.description} - ${post.amount}`;
-
-li.appendChild(span);
-incomeList.appendChild(li);*/
-
+  const groupedIncomes = groupByCategory(incomes);
   let html = "";
 
-  incomes.forEach((budgetPost, index) => {
+  Object.values(groupedIncomes).forEach((group) => {
     html += `
-      <li>${budgetPost.category}: ${budgetPost.description} - ${budgetPost.amount} kr
-        <button class="delete-income" data-id="${index}">Radera</button>
-      </li>`;
+      <li class="budgetpost budgetpost--category-${group.categoryValue}">
+        <strong>${group.categoryText}</strong>
+        <ul>
+    `;
+
+    group.items.forEach((item) => {
+      html += `
+        <li class="budgetpost__item">
+          <span>${item.description}: ${item.amount} kr</span>
+          <button
+            class="btn btn--delete-income"
+            data-id="${item.id}"
+            aria-label="Radera budgetpost"
+          >
+            ✕
+          </button>
+        </li>
+      `;
+    });
+
+    html += `
+        </ul>
+      </li>
+    `;
   });
 
   incomeList.innerHTML = html;
 
-  document.querySelectorAll("button.delete-income").forEach((btn) => {
+  document.querySelectorAll(".btn--delete-income").forEach((btn) => {
     btn.addEventListener("click", deleteIncomeBudgetPost);
   });
 }
 
 function renderExpenseBudgetPost() {
+  console.log("renderExpenseBudgetPost KÖRS");
   if (!expenseList) return;
 
+  const groupedExpenses = groupByCategory(expenses);
   let html = "";
 
-  expenses.forEach((budgetPost, index) => {
+  Object.values(groupedExpenses).forEach((group) => {
     html += `
-      <li>
-        ${budgetPost.category}: ${budgetPost.description} - ${budgetPost.amount}
-        <button class="delete-expense" data-id="${index}">Radera</button>
-      </li>`;
+      <li class="budgetpost budgetpost--category-${group.categoryValue}">
+        <strong>${group.categoryText}</strong>
+        <ul>
+    `;
+
+    group.items.forEach((item) => {
+      html += `
+        <li class="budgetpost__item">
+          <span>${item.description}: ${item.amount} kr</span>
+          <button
+            class="btn btn--delete-expense"
+            data-id="${item.id}"
+            aria-label="Radera budgetpost"
+          >
+            ✕
+          </button>
+        </li>
+      `;
+    });
+
+    html += `
+        </ul>
+      </li>
+    `;
   });
 
   expenseList.innerHTML = html;
 
-  document.querySelectorAll("button.delete-expense").forEach((btn) => {
+  document.querySelectorAll(".btn--delete-expense").forEach((btn) => {
     btn.addEventListener("click", deleteExpenseBudgetPost);
   });
 }
 
-// Visa options i dropdown
+// Visa options från json i dropdown
 function renderCategoryOptions(selectDropdown, categories) {
   // Kolla så att dropdown-listan finns
   if (!selectDropdown) return;
@@ -234,20 +281,21 @@ Det är användaren som triggar funktionerna */
 // Skapa post av inmatad data
 function createIncomeBudgetPostOnClick() {
   console.log("Inkomst-knappen funkar!");
-  // 1. läs värde från dropdown-lista och spara dom i lokala variabler
-  const category = incomeCategorySelect?.value; // null = medvetet tomt värde
-  // 2. läs värden från input-fälten
+  // 1. läs valt alternativ från dropdown
+  const selectedOption =
+    incomeCategorySelect.options[incomeCategorySelect.selectedIndex];
+
+  // 2. läs värden från input-fälten och spara värdet i variabler
   const description = incomeDescriptionInput?.value;
   const amount = Number(incomeAmountInput?.value); // inte en sträng
-  // Testa så det funkar!
-  console.log(category);
-  console.log(description);
-  console.log(amount);
+
   // 3. Skapa budgetpost
   const budgetPost = {
-    category, // dropdown-option
-    description, // input-value
-    amount: Number(incomeAmountInput.value), // input-value
+    id: crypto.randomUUID(), // istället för index och funkar oavsett rendering (gruppering)
+    categoryValue: selectedOption.value,
+    categoryText: selectedOption.text,
+    description,
+    amount,
   };
 
   // 4. uppdatera data (i arrayen högst upp i filen)
@@ -262,18 +310,17 @@ function createIncomeBudgetPostOnClick() {
 function createExpenseBudgetPostOnClick() {
   console.log("Utgift-knappen funkar!");
 
-  const category = expenseCategorySelect?.value;
+  const selectedOption =
+    expenseCategorySelect.options[expenseCategorySelect.selectedIndex];
   const description = expenseDescriptionInput?.value;
   const amount = Number(expenseAmountInput?.value);
 
-  console.log(category);
-  console.log(description);
-  console.log(amount);
-
   const budgetPost = {
-    category,
+    id: crypto.randomUUID(),
+    categoryValue: selectedOption.value,
+    categoryText: selectedOption.text,
     description,
-    amount: Number(expenseAmountInput.value),
+    amount,
   };
 
   expenses.push(budgetPost);
@@ -283,18 +330,22 @@ function createExpenseBudgetPostOnClick() {
 }
 
 function deleteIncomeBudgetPost(event) {
-  const id = Number(event.target.dataset.id);
+  console.log("Delete klickad", event.target.dataset.id);
+  const id = event.currentTarget.dataset.id;
 
-  incomes.splice(id, 1);
+  incomes = incomes.filter((post) => post.id !== id); // filter istället för splice
+
   saveToLocalStorage();
   renderIncomeBudgetPost();
   renderBalance();
 }
 
 function deleteExpenseBudgetPost(event) {
-  const id = Number(event.target.dataset.id);
+  console.log("DELETE EXPENSE CLICK", event.target.dataset.id);
+  const id = event.currentTarget.dataset.id;
 
-  expenses.splice(id, 1);
+  expenses = expenses.filter((post) => post.id !== id);
+
   saveToLocalStorage();
   renderExpenseBudgetPost();
   renderBalance();

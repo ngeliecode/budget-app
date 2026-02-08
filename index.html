@@ -12,143 +12,165 @@
     />
   </head>
 
-  <body>
-    <div class="app">
-      <header>
-        <button
-          id="themeToggle"
-          class="theme-toggle"
-          type="button"
-          title="Toggle theme"
-          aria-label="Toggle theme"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            class="theme-toggle__dark-side"
-            viewBox="0 0 32 32"
+  <body class="dark">
+    <div class="wrapper">
+      <main class="app">
+        <header>
+          <button
+            id="themeToggle"
+            class="theme-toggle"
+            type="button"
+            title="Toggle theme"
+            aria-label="Toggle theme"
           >
-            <path
-              d="M16 .5C7.4.5.5 7.4.5 16S7.4 31.5 16 31.5 31.5 24.6 31.5 16 24.6.5 16 .5zm0 28.1V3.4C23 3.4 28.6 9 28.6 16S23 28.6 16 28.6z"
-            />
-          </svg>
-        </button>
-        <h1>Budgetkollen</h1>
-      </header>
-      <svg
-        class="wavy-header"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 1440 320"
-      >
-        <path
-          fill-opacity="1"
-          d="M0,96L20,122.7C40,149,80,203,120,234.7C160,267,200,277,240,250.7C280,224,320,160,360,117.3C400,75,440,53,480,58.7C520,64,560,96,600,96C640,96,680,64,720,74.7C760,85,800,139,840,181.3C880,224,920,256,960,272C1000,288,1040,288,1080,272C1120,256,1160,224,1200,181.3C1240,139,1280,85,1320,106.7C1360,128,1400,224,1420,272L1440,320L1440,0L1420,0C1400,0,1360,0,1320,0C1280,0,1240,0,1200,0C1160,0,1120,0,1080,0C1040,0,1000,0,960,0C920,0,880,0,840,0C800,0,760,0,720,0C680,0,640,0,600,0C560,0,520,0,480,0C440,0,400,0,360,0C320,0,280,0,240,0C200,0,160,0,120,0C80,0,40,0,20,0L0,0Z"
-        ></path>
-      </svg>
-      <main>
-        <section>
-          <h2></h2>
-          <p>The fun way to keep track of your finances.</p>
-        </section>
-        <section>
-          <h2>Inkomster</h2>
-
-          <form>
-            <div>
-              <label>Kategori</label>
-              <select id="incomeCategory">
-                <!-- dropdown-options renderas här -->
-              </select>
-            </div>
-
-            <div>
-              <label>Beskrivning</label>
-              <input
-                type="text"
-                id="incomeDescription"
-                class="income-description"
-                name="income-description"
-              />
-            </div>
-
-            <div>
-              <label>Summa</label>
-              <input
-                type="number"
-                id="incomeAmount"
-                class="income-amount"
-                name="income-amount"
-              />
-            </div>
-
-            <button
-              type="button"
-              class="btn btn--add-income"
-              id="addIncomeItemBtn"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              class="svg svg--sun-icon"
             >
-              Lägg till
-            </button>
-          </form>
-
-          <ul id="incomeList">
-            <!-- budgetpost renderas här (kategori, beskrivning, belopp) -->
-          </ul>
-        </section>
-
-        <section>
-          <h2>Utgifter</h2>
-
-          <form>
-            <div>
-              <label>Kategori</label>
-              <select id="expenseCategory">
-                <!-- dropdown-options renderas här -->
-              </select>
-            </div>
-
-            <div>
-              <label>Beskrivning</label>
-              <input
-                type="text"
-                id="expenseDescription"
-                class="expense-description"
-                name="expense-description"
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
               />
-            </div>
+            </svg>
 
-            <div>
-              <label>Summa</label>
-              <input
-                type="number"
-                id="expenseAmount"
-                class="expense-amount"
-                name="expense-amount"
-              />
-            </div>
-
-            <button
-              type="button"
-              class="btn btn--add-expense"
-              id="addExpenseItemBtn"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              class="svg svg--moon-icon"
             >
-              Lägg till
-            </button>
-          </form>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"
+              />
+            </svg>
+          </button>
+          <h1>Budgetkollen</h1>
+        </header>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="wave"
+          viewBox="0 0 1440 320"
+        >
+          <path
+            d="M0,288L48,256C96,224,192,160,288,138.7C384,117,480,139,576,170.7C672,203,768,245,864,229.3C960,213,1056,139,1152,122.7C1248,107,1344,149,1392,170.7L1440,192L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
+          ></path>
+        </svg>
+        <main>
+          <section>
+            <h2>Inkomster</h2>
 
-          <ul id="expenseList">
-            <!-- budgetpost renderas här (kategori, beskrivning, belopp) -->
-          </ul>
-        </section>
+            <form>
+              <div class="category">
+                <label class="visually-hidden">Kategori</label>
+                <select id="incomeCategory">
+                  <!-- dropdown-options renderas här -->
+                </select>
+              </div>
 
-        <section class="balance">
-          <h2>Balans</h2>
-          <p id="balanceNumber">
-            0 kr<!-- Här renderar ts ut ett nummer/manipulerar numret -->
-          </p>
-        </section>
+              <div class="description">
+                <label class="visually-hidden">Beskrivning</label>
+                <input
+                  type="text"
+                  id="incomeDescription"
+                  class="income-description"
+                  name="income-description"
+                  placeholder="Beskrivning (t.ex. CSN)"
+                />
+              </div>
+
+              <div class="amount">
+                <label class="visually-hidden">Summa</label>
+                <input
+                  type="number"
+                  id="incomeAmount"
+                  class="income-amount"
+                  name="income-amount"
+                  placeholder="Belopp"
+                />
+              </div>
+
+              <button
+                type="button"
+                class="btn btn--add-income"
+                id="addIncomeItemBtn"
+              >
+                Lägg till
+              </button>
+            </form>
+
+            <ul class="budgetpost-list" id="incomeList">
+              <!-- budgetposter renderas här -->
+            </ul>
+          </section>
+
+          <section>
+            <h2>Utgifter</h2>
+
+            <form>
+              <div class="category">
+                <label class="visually-hidden">Kategori</label>
+                <select id="expenseCategory">
+                  <!-- dropdown-options renderas här -->
+                </select>
+              </div>
+
+              <div class="description">
+                <label class="visually-hidden">Beskrivning</label>
+                <input
+                  type="text"
+                  id="expenseDescription"
+                  class="expense-description"
+                  name="expense-description"
+                  placeholder="T.ex. Hyra"
+                />
+              </div>
+
+              <div class="amount">
+                <label class="visually-hidden">Summa</label>
+                <input
+                  type="number"
+                  id="expenseAmount"
+                  class="expense-amount"
+                  name="expense-amount"
+                />
+              </div>
+
+              <button
+                type="button"
+                class="btn btn--add-expense"
+                id="addExpenseItemBtn"
+              >
+                Lägg till
+              </button>
+            </form>
+
+            <ul class="budgetpost-list" id="expenseList">
+              <!-- budgetpost renderas här (kategori, beskrivning, belopp) -->
+            </ul>
+          </section>
+
+          <section>
+            <h2>Balans</h2>
+            <p class="balance" id="balanceNumber" aria-live="polite">
+              0 kr<!-- Här renderar ts ut ett nummer/manipulerar numret -->
+            </p>
+          </section>
+        </main>
+        <footer>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, enim
+          qui! Voluptates in illo placeat labore nobis sunt ducimus sed!
+          Deleniti molestiae accusantium quidem pariatur, aspernatur velit
+          accusamus cum culpa!
+        </footer>
+        <script type="module" src="/src/main.ts"></script>
       </main>
-      <footer></footer>
-      <script type="module" src="/src/main.ts"></script>
     </div>
   </body>
 </html>
