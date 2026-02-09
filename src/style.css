@@ -224,16 +224,35 @@ input,
 
 .budgetpost-list {
   margin-top: 2rem;
-  padding-block: 1rem;
   border-radius: 2rem;
-  background-color: #4a3e64;
+  background-color: #6446a4;
   list-style: none;
+  padding: 2rem;
+}
+
+.budgetpost ul {
   padding-left: 1rem;
+  margin-bottom: 1rem;
 }
 
 .budgetpost__item {
   display: flex;
-  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.budgetpost__description {
+  flex: 1;
+  text-align: left;
+}
+
+.budgetpost__amount {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.budgetpost__delete_btn {
+  margin-left: 0.5rem;
 }
 
 .balance {

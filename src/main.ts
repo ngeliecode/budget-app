@@ -189,9 +189,10 @@ function renderIncomeBudgetPost() {
     group.items.forEach((item) => {
       html += `
         <li class="budgetpost__item">
-          <span>${item.description}: ${item.amount} kr</span>
+          <span class="budgetpost__description">${item.description}</span>
+          <span class="budgetpost__amount">${item.amount} kr</span>
           <button
-            class="btn btn--delete-income"
+            class="budgetpost__delete_btn"
             data-id="${item.id}"
             aria-label="Radera budgetpost"
           >
@@ -209,13 +210,12 @@ function renderIncomeBudgetPost() {
 
   incomeList.innerHTML = html;
 
-  document.querySelectorAll(".btn--delete-income").forEach((btn) => {
+  document.querySelectorAll(".budgetpost__delete_btn").forEach((btn) => {
     btn.addEventListener("click", deleteIncomeBudgetPost);
   });
 }
 
 function renderExpenseBudgetPost() {
-  console.log("renderExpenseBudgetPost KÖRS");
   if (!expenseList) return;
 
   const groupedExpenses = groupByCategory(expenses);
@@ -231,9 +231,10 @@ function renderExpenseBudgetPost() {
     group.items.forEach((item) => {
       html += `
         <li class="budgetpost__item">
-          <span>${item.description}: ${item.amount} kr</span>
+          <span class="budgetpost__description">${item.description}</span>
+          <span class="budgetpost__amount">${item.amount} kr</span>
           <button
-            class="btn btn--delete-expense"
+            class="budgetpost__delete_btn"
             data-id="${item.id}"
             aria-label="Radera budgetpost"
           >
@@ -251,7 +252,7 @@ function renderExpenseBudgetPost() {
 
   expenseList.innerHTML = html;
 
-  document.querySelectorAll(".btn--delete-expense").forEach((btn) => {
+  document.querySelectorAll(".budgetpost__delete_btn").forEach((btn) => {
     btn.addEventListener("click", deleteExpenseBudgetPost);
   });
 }
