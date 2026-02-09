@@ -1,5 +1,6 @@
 import "./style.css";
 import categories from "./categories.json";
+import type { BudgetPost } from "./models";
 
 // =================================================================================
 // DATA ====================================================================
@@ -10,8 +11,8 @@ Här är listorna med data (värden från inputs och select)
 som ska sparas i localStorage.
 */
 
-let incomes = [];
-let expenses = [];
+let incomes: BudgetPost = [];
+let expenses: BudgetPost = [];
 
 // =================================================================================
 // VARIABLER / QUERY-SELECTORS / DOM-ELEMENT =======================================
