@@ -8,11 +8,13 @@ import type { BudgetPost } from "./models";
 
 /*
 Här är listorna med data (värden från inputs och select) 
-som ska sparas i localStorage.
+som ska sparas i localStorage. 
+Listorna innehåller BudgetPost-objekt
 */
 
 let incomes: BudgetPost[] = []; // BudgetPost = en budgetpost
-let expenses: BudgetPost[] = []; // BudgetPost[] = flera poster
+let expenses: BudgetPost[] = []; // BudgetPost[] = flera poster (objekt) -> lista
+// : BudgetPost[] = typen
 
 // =================================================================================
 // VARIABLER / QUERY-SELECTORS / DOM-ELEMENT =======================================
