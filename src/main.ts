@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import "./style.css";
 import categories from "./categories.json";
 

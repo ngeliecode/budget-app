@@ -114,6 +114,14 @@ header {
   border: 1px solid #a7ebf2;
 }
 
+.dark .budgetpost {
+  background-color: #41377f;
+}
+
+.dark .budgetpost__item {
+  background-color: #514dcd;
+}
+
 .dark .wave {
   fill: #102061;
   fill-opacity: "1";
@@ -223,22 +231,35 @@ input,
 }
 
 .budgetpost-list {
-  margin-top: 2rem;
-  border-radius: 2rem;
-  background-color: #6446a4;
   list-style: none;
-  padding: 2rem;
+  padding: 0;
+  margin-top: 2rem;
+}
+
+.budgetpost-list:empty {
+  background-color: none;
+  padding: 0;
+  margin: 0;
 }
 
 .budgetpost ul {
-  padding-left: 1rem;
-  margin-bottom: 1rem;
+  padding-left: 0;
+}
+
+.budgetpost {
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-top: 0.5rem;
 }
 
 .budgetpost__item {
   display: flex;
   gap: 1rem;
   align-items: center;
+  padding-inline: 0.7rem;
+  padding-block: 0.5rem;
+  margin-block: 0.5rem;
+  border-radius: 0.5rem;
 }
 
 .budgetpost__description {
