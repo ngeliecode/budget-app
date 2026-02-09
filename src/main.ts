@@ -11,8 +11,8 @@ Här är listorna med data (värden från inputs och select)
 som ska sparas i localStorage.
 */
 
-let incomes: BudgetPost = [];
-let expenses: BudgetPost = [];
+let incomes: BudgetPost[] = []; // BudgetPost = en budgetpost
+let expenses: BudgetPost[] = []; // BudgetPost[] = flera poster
 
 // =================================================================================
 // VARIABLER / QUERY-SELECTORS / DOM-ELEMENT =======================================
@@ -23,14 +23,21 @@ const addIncomeItemBtn = document.querySelector("#addIncomeItemBtn");
 const addExpenseItemBtn = document.querySelector("#addExpenseItemBtn");
 
 // Dropdowns
-const incomeCategorySelect = document.querySelector("#incomeCategory");
-const expenseCategorySelect = document.querySelector("#expenseCategory");
+const incomeCategorySelect =
+  document.querySelector<HTMLSelectElement>("#incomeCategory");
+const expenseCategorySelect =
+  document.querySelector<HTMLSelectElement>("#expenseCategory");
 
 // input-fälten
-const incomeDescriptionInput = document.querySelector("#incomeDescription");
-const expenseDescriptionInput = document.querySelector("#expenseDescription");
-const incomeAmountInput = document.querySelector("#incomeAmount");
-const expenseAmountInput = document.querySelector("#expenseAmount");
+const incomeDescriptionInput =
+  document.querySelector<HTMLInputElement>("#incomeDescription");
+const expenseDescriptionInput = document.querySelector<HTMLInputElement>(
+  "#expenseDescription"
+);
+const incomeAmountInput =
+  document.querySelector<HTMLInputElement>("#incomeAmount");
+const expenseAmountInput =
+  document.querySelector<HTMLInputElement>("#expenseAmount");
 
 // Listor där budgetposter ska renderas
 const incomeList = document.querySelector("#incomeList");
@@ -51,10 +58,13 @@ addIncomeItemBtn?.addEventListener("click", createIncomeBudgetPostOnClick);
 addExpenseItemBtn?.addEventListener("click", createExpenseBudgetPostOnClick);
 
 // Tema
-themeToggleBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-  document.body.classList.toggle("light");
-});
+if (themeToggleBtn) {
+  // Om den inte finns körs ingen event-lyssnare
+  themeToggleBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    document.body.classList.toggle("light");
+  });
+}
 
 // =================================================================================
 // FUNKTIONER SOM HANTERAR DATA ====================================================
@@ -104,7 +114,7 @@ function calculateBalance() {
 }
 
 // Gruppera budgetpost inför rendering
-function groupByCategory(posts) {
+function groupByCategory(posts: BudgetPost[]) {
   // Skapa ett tomt objekt
   const grouped = {};
   // Gå igenom varje budgetpost
@@ -257,7 +267,10 @@ function renderExpenseBudgetPost() {
 }
 
 // Visa options från json i dropdown
-function renderCategoryOptions(selectDropdown, categories) {
+function renderCategoryOptions(
+  selectDropdown: HTMLSelectElement | null, // Om det inte finns är det null och inte ett html-element
+  categories: { text: string; value: string }[]
+) {
   // Kolla så att dropdown-listan finns
   if (!selectDropdown) return;
   // Skapa en tom option
@@ -280,7 +293,9 @@ Det är användaren som triggar funktionerna */
 
 // Skapa post av inmatad data
 function createIncomeBudgetPostOnClick() {
-  console.log("Inkomst-knappen funkar!");
+  if (!incomeCategorySelect || !incomeDescriptionInput || !incomeAmountInput) {
+    return;
+  }
   // 1. läs valt alternativ från dropdown
   const selectedOption =
     incomeCategorySelect.options[incomeCategorySelect.selectedIndex];
