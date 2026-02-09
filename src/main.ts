@@ -31,9 +31,11 @@ const expenseCategorySelect =
 // input-fälten
 const incomeDescriptionInput =
   document.querySelector<HTMLInputElement>("#incomeDescription");
+
 const expenseDescriptionInput = document.querySelector<HTMLInputElement>(
   "#expenseDescription"
 );
+
 const incomeAmountInput =
   document.querySelector<HTMLInputElement>("#incomeAmount");
 const expenseAmountInput =
@@ -116,7 +118,10 @@ function calculateBalance() {
 // Gruppera budgetpost inför rendering
 function groupByCategory(posts: BudgetPost[]) {
   // Skapa ett tomt objekt
-  const grouped = {};
+  const grouped: Record<
+    string,
+    { categoryValue: string; categoryText: string; items: BudgetPost[] }
+  > = {};
   // Gå igenom varje budgetpost
   posts.forEach((post) => {
     // Om kategorin inte finns --> skapa den
@@ -219,9 +224,11 @@ function renderIncomeBudgetPost() {
 
   incomeList.innerHTML = html;
 
-  document.querySelectorAll(".budgetpost__delete_btn").forEach((btn) => {
-    btn.addEventListener("click", deleteIncomeBudgetPost);
-  });
+  document
+    .querySelectorAll<HTMLButtonElement>(".budgetpost__delete_btn")
+    .forEach((btn) => {
+      btn.addEventListener("click", deleteIncomeBudgetPost);
+    });
 }
 
 function renderExpenseBudgetPost() {
@@ -261,9 +268,11 @@ function renderExpenseBudgetPost() {
 
   expenseList.innerHTML = html;
 
-  document.querySelectorAll(".budgetpost__delete_btn").forEach((btn) => {
-    btn.addEventListener("click", deleteExpenseBudgetPost);
-  });
+  document
+    .querySelectorAll<HTMLButtonElement>(".budgetpost__delete_btn")
+    .forEach((btn) => {
+      btn.addEventListener("click", deleteExpenseBudgetPost);
+    });
 }
 
 // Visa options från json i dropdown
@@ -301,8 +310,8 @@ function createIncomeBudgetPostOnClick() {
     incomeCategorySelect.options[incomeCategorySelect.selectedIndex];
 
   // 2. läs värden från input-fälten och spara värdet i variabler
-  const description = incomeDescriptionInput?.value;
-  const amount = Number(incomeAmountInput?.value); // inte en sträng
+  const description = incomeDescriptionInput.value;
+  const amount = Number(incomeAmountInput.value); // inte en sträng
 
   // 3. Skapa budgetpost
   const budgetPost = {
@@ -323,12 +332,17 @@ function createIncomeBudgetPostOnClick() {
 }
 
 function createExpenseBudgetPostOnClick() {
-  console.log("Utgift-knappen funkar!");
-
+  if (
+    !expenseCategorySelect ||
+    !expenseDescriptionInput ||
+    !expenseAmountInput
+  ) {
+    return;
+  }
   const selectedOption =
     expenseCategorySelect.options[expenseCategorySelect.selectedIndex];
-  const description = expenseDescriptionInput?.value;
-  const amount = Number(expenseAmountInput?.value);
+  const description = expenseDescriptionInput.value;
+  const amount = Number(expenseAmountInput.value);
 
   const budgetPost = {
     id: crypto.randomUUID(),
@@ -344,9 +358,9 @@ function createExpenseBudgetPostOnClick() {
   renderBalance();
 }
 
-function deleteIncomeBudgetPost(event) {
-  console.log("Delete klickad", event.target.dataset.id);
-  const id = event.currentTarget.dataset.id;
+function deleteIncomeBudgetPost(event: MouseEvent) {
+  const button = event.currentTarget as HTMLButtonElement;
+  const id = button.dataset.id;
 
   incomes = incomes.filter((post) => post.id !== id); // filter istället för splice
 
@@ -355,9 +369,9 @@ function deleteIncomeBudgetPost(event) {
   renderBalance();
 }
 
-function deleteExpenseBudgetPost(event) {
-  console.log("DELETE EXPENSE CLICK", event.target.dataset.id);
-  const id = event.currentTarget.dataset.id;
+function deleteExpenseBudgetPost(event: MouseEvent) {
+  const button = event.currentTarget as HTMLButtonElement;
+  const id = button.dataset.id;
 
   expenses = expenses.filter((post) => post.id !== id);
 
