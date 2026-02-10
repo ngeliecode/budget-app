@@ -14,7 +14,7 @@
 
   <body class="dark">
     <div class="wrapper">
-      <main class="app">
+      <div class="app">
         <header>
           <button
             id="themeToggle"
@@ -24,11 +24,13 @@
             aria-label="Toggle theme"
           >
             <svg
+              aria-hidden="true"
+              class="svg svg--sun-icon"
+              aria-label="Sol-ikon"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
-              class="svg svg--sun-icon"
             >
               <path
                 stroke-linecap="round"
@@ -38,11 +40,13 @@
             </svg>
 
             <svg
+              aria-hidden="true"
+              class="svg svg--moon-icon"
+              aria-label="Måne-ikon"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
-              class="svg svg--moon-icon"
             >
               <path
                 stroke-linecap="round"
@@ -54,6 +58,7 @@
           <h1>Budgetkollen</h1>
         </header>
         <svg
+          aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           class="wave"
           viewBox="0 0 1440 320"
@@ -68,14 +73,18 @@
 
             <form>
               <div class="category">
-                <label class="visually-hidden">Kategori</label>
-                <select id="incomeCategory">
+                <label for="incomeCategory" class="visually-hidden"
+                  >Kategori</label
+                >
+                <select id="incomeCategory" name="income-category">
                   <!-- dropdown-options renderas här -->
                 </select>
               </div>
 
               <div class="description">
-                <label class="visually-hidden">Beskrivning</label>
+                <label for="incomeDescription" class="visually-hidden"
+                  >Beskrivning</label
+                >
                 <input
                   type="text"
                   id="incomeDescription"
@@ -86,7 +95,7 @@
               </div>
 
               <div class="amount">
-                <label class="visually-hidden">Summa</label>
+                <label for="incomeAmount" class="visually-hidden">Summa</label>
                 <input
                   type="number"
                   id="incomeAmount"
@@ -112,14 +121,18 @@
 
             <form>
               <div class="category">
-                <label class="visually-hidden">Kategori</label>
-                <select id="expenseCategory">
+                <label for="expenseCategory" class="visually-hidden"
+                  >Kategori</label
+                >
+                <select id="expenseCategory" name="expense-category">
                   <!-- dropdown-options renderas här -->
                 </select>
               </div>
 
               <div class="description">
-                <label class="visually-hidden">Beskrivning</label>
+                <label for="expenseDescription" class="visually-hidden"
+                  >Beskrivning</label
+                >
                 <input
                   type="text"
                   id="expenseDescription"
@@ -130,7 +143,7 @@
               </div>
 
               <div class="amount">
-                <label class="visually-hidden">Summa</label>
+                <label for="expenseAmount" class="visually-hidden">Summa</label>
                 <input
                   type="number"
                   id="expenseAmount"
@@ -147,7 +160,6 @@
                 Lägg till
               </button>
             </form>
-
             <!-- budgetpost renderas här under (kategori, beskrivning, belopp) -->
             <ul class="budgetpost-list" id="expenseList"></ul>
           </section>
@@ -159,9 +171,10 @@
             </p>
           </section>
         </main>
-        <script type="module" src="/src/main.ts"></script>
+
         <footer></footer>
-      </main>
+      </div>
     </div>
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
