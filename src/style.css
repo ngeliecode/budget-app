@@ -1,8 +1,8 @@
 :root {
-  --border-glow: inset 0 0 12px rgba(167, 235, 242, 0.35),
-    0 0 25px rgba(179, 218, 255, 0.45), 0 8px 30px rgba(0, 0, 0, 0.35);
-  --colour-dark: rgb(207, 207, 207);
-  --color-light: #46504d;
+  --border-glow:
+    inset 0 0 12px rgba(167, 235, 242, 0.35), 0 0 25px rgba(179, 218, 255, 0.45), 0 8px 30px rgba(0, 0, 0, 0.35);
+  --colour-dark: rgb(229, 228, 228);
+  --color-light: #38413e;
 }
 
 /* ================================================================================= 
@@ -26,7 +26,7 @@
 body {
   min-height: 100vh;
   margin: 0;
-  font-family: "Commissioner", sans-serif;
+  font-family: 'Commissioner', sans-serif;
   letter-spacing: 0.1rem;
 }
 
@@ -45,21 +45,13 @@ body {
 
 body {
   background: #ffffff;
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(177, 204, 204, 1) 100%
-  );
+  background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(177, 204, 204, 1) 100%);
   color: var(--color-light);
 }
 
 body.dark {
   background: #2a689b;
-  background: radial-gradient(
-    circle,
-    rgba(42, 104, 155, 1) 0%,
-    rgba(22, 30, 77, 1) 100%
-  );
+  background: radial-gradient(circle, rgba(42, 104, 155, 1) 0%, rgba(22, 30, 77, 1) 100%);
   color: var(--colour-dark);
 }
 
@@ -100,7 +92,8 @@ footer {
   -webkit-backdrop-filter: blur(12px);
   /*border-radius: 0;*/
   border: 1px solid rgba(167, 235, 242, 0.2);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45),
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.45),
     0 0 40px rgba(167, 235, 242, 0.15);
 }
 
@@ -256,7 +249,9 @@ form {
   position: absolute;
   inset: 0;
   margin: auto;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 /* Light mode */
@@ -278,7 +273,7 @@ input,
   cursor: pointer;
   padding: 0.7rem;
   font-weight: 500;
-  font-family: "Commissioner", sans-serif;
+  font-family: 'Commissioner', sans-serif;
   letter-spacing: 0.05rem;
   /*text-transform: uppercase;*/
 }
@@ -289,7 +284,7 @@ input,
   margin-top: 2rem;
   font-weight: 500;
   font-size: 0.9rem;
-  font-family: "Commissioner", sans-serif;
+  font-family: 'Commissioner', sans-serif;
   letter-spacing: 0.05rem;
 }
 
@@ -349,7 +344,9 @@ input,
   margin: 2rem auto; /* auto vänster och höger */
   margin-bottom: 5rem;
   /* mjuk övergång mellan färgbyten */
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
   font-weight: 700;
 }
 

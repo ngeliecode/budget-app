@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -16,13 +16,7 @@
     <div class="wrapper">
       <div class="app">
         <header>
-          <button
-            id="themeToggle"
-            class="theme-toggle"
-            type="button"
-            title="Toggle theme"
-            aria-label="Toggle theme"
-          >
+          <button id="themeToggle" class="theme-toggle" type="button" title="Toggle theme" aria-label="Toggle theme">
             <svg
               aria-hidden="true"
               class="svg svg--sun-icon"
@@ -57,12 +51,7 @@
           </button>
           <h1>Budgetkollen</h1>
         </header>
-        <svg
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          class="wave"
-          viewBox="0 0 1440 320"
-        >
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="wave" viewBox="0 0 1440 320">
           <path
             d="M0,288L48,256C96,224,192,160,288,138.7C384,117,480,139,576,170.7C672,203,768,245,864,229.3C960,213,1056,139,1152,122.7C1248,107,1344,149,1392,170.7L1440,192L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
           ></path>
@@ -73,18 +62,14 @@
 
             <form>
               <div class="category">
-                <label for="incomeCategory" class="visually-hidden"
-                  >Kategori</label
-                >
+                <label for="incomeCategory" class="visually-hidden">Kategori</label>
                 <select id="incomeCategory" name="income-category">
                   <!-- dropdown-options renderas här -->
                 </select>
               </div>
 
               <div class="description">
-                <label for="incomeDescription" class="visually-hidden"
-                  >Beskrivning</label
-                >
+                <label for="incomeDescription" class="visually-hidden">Beskrivning</label>
                 <input
                   type="text"
                   id="incomeDescription"
@@ -105,13 +90,7 @@
                 />
               </div>
 
-              <button
-                type="button"
-                class="btn btn--add-income"
-                id="addIncomeItemBtn"
-              >
-                Lägg till
-              </button>
+              <button type="button" class="btn btn--add-income" id="addIncomeItemBtn">Lägg till</button>
             </form>
             <ul class="budgetpost-list" id="incomeList"></ul>
           </section>
@@ -121,18 +100,14 @@
 
             <form>
               <div class="category">
-                <label for="expenseCategory" class="visually-hidden"
-                  >Kategori</label
-                >
+                <label for="expenseCategory" class="visually-hidden">Kategori</label>
                 <select id="expenseCategory" name="expense-category">
                   <!-- dropdown-options renderas här -->
                 </select>
               </div>
 
               <div class="description">
-                <label for="expenseDescription" class="visually-hidden"
-                  >Beskrivning</label
-                >
+                <label for="expenseDescription" class="visually-hidden">Beskrivning</label>
                 <input
                   type="text"
                   id="expenseDescription"
@@ -144,21 +119,10 @@
 
               <div class="amount">
                 <label for="expenseAmount" class="visually-hidden">Summa</label>
-                <input
-                  type="number"
-                  id="expenseAmount"
-                  class="expense-amount"
-                  name="expense-amount"
-                />
+                <input type="number" id="expenseAmount" class="expense-amount" name="expense-amount" />
               </div>
 
-              <button
-                type="button"
-                class="btn btn--add-expense"
-                id="addExpenseItemBtn"
-              >
-                Lägg till
-              </button>
+              <button type="button" class="btn btn--add-expense" id="addExpenseItemBtn">Lägg till</button>
             </form>
             <!-- budgetpost renderas här under (kategori, beskrivning, belopp) -->
             <ul class="budgetpost-list" id="expenseList"></ul>

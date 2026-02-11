@@ -1,6 +1,6 @@
-import "./style.css";
-import categories from "./categories.json";
-import type { BudgetPost } from "./models";
+import './style.css';
+import categories from './categories.json';
+import type { BudgetPost } from './models';
 
 // =================================================================================
 // DATA ====================================================================
@@ -21,52 +21,44 @@ let expenses: BudgetPost[] = []; // BudgetPost[] = flera poster (objekt) -> list
 // =================================================================================
 
 // Definiera globala variabler som pekar på "Lägg till" knapparna
-const addIncomeItemBtn = document.querySelector("#addIncomeItemBtn");
-const addExpenseItemBtn = document.querySelector("#addExpenseItemBtn");
+const addIncomeItemBtn: HTMLButtonElement | null = document.querySelector('#addIncomeItemBtn');
+const addExpenseItemBtn: HTMLButtonElement | null = document.querySelector('#addExpenseItemBtn');
 
 // Dropdowns
-const incomeCategorySelect =
-  document.querySelector<HTMLSelectElement>("#incomeCategory");
-const expenseCategorySelect =
-  document.querySelector<HTMLSelectElement>("#expenseCategory");
+const incomeCategorySelect: HTMLSelectElement | null = document.querySelector('#incomeCategory');
+const expenseCategorySelect: HTMLSelectElement | null = document.querySelector('#expenseCategory');
 
 // input-fälten
-const incomeDescriptionInput =
-  document.querySelector<HTMLInputElement>("#incomeDescription");
+const incomeDescriptionInput: HTMLInputElement | null = document.querySelector('#incomeDescription');
+const expenseDescriptionInput: HTMLInputElement | null = document.querySelector('#expenseDescription');
 
-const expenseDescriptionInput = document.querySelector<HTMLInputElement>(
-  "#expenseDescription"
-);
-
-const incomeAmountInput =
-  document.querySelector<HTMLInputElement>("#incomeAmount");
-const expenseAmountInput =
-  document.querySelector<HTMLInputElement>("#expenseAmount");
+const incomeAmountInput: HTMLInputElement | null = document.querySelector('#incomeAmount');
+const expenseAmountInput: HTMLInputElement | null = document.querySelector('#expenseAmount');
 
 // Listor där budgetposter ska renderas
-const incomeList = document.querySelector("#incomeList");
-const expenseList = document.querySelector("#expenseList");
+const incomeList: HTMLInputElement | null = document.querySelector('#incomeList');
+const expenseList: HTMLInputElement | null = document.querySelector('#expenseList');
 
 // Balans
-const balanceNumber = document.querySelector("#balanceNumber");
+const balanceNumber = document.querySelector('#balanceNumber');
 
 // Tema
-const themeToggleBtn = document.querySelector(".theme-toggle");
+const themeToggleBtn = document.querySelector('.theme-toggle');
 
 // =================================================================================
 // EVENT-LYSSNARE ==================================================================
 // =================================================================================
 
 // Lyssna efter klick på "Lägg till" knappar
-addIncomeItemBtn?.addEventListener("click", createIncomeBudgetPostOnClick);
-addExpenseItemBtn?.addEventListener("click", createExpenseBudgetPostOnClick);
+addIncomeItemBtn?.addEventListener('click', createIncomeBudgetPostOnClick);
+addExpenseItemBtn?.addEventListener('click', createExpenseBudgetPostOnClick);
 
 // Tema
 if (themeToggleBtn) {
   // Om den inte finns körs ingen event-lyssnare
-  themeToggleBtn.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-    document.body.classList.toggle("light");
+  themeToggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    document.body.classList.toggle('light');
   });
 }
 
@@ -79,14 +71,14 @@ Jobbar med appens minne */
 
 function saveToLocalStorage() {
   // Gör om arrayer till strings (text) och spara dom till localStorage
-  localStorage.setItem("incomes", JSON.stringify(incomes));
-  localStorage.setItem("expenses", JSON.stringify(expenses));
+  localStorage.setItem('incomes', JSON.stringify(incomes));
+  localStorage.setItem('expenses', JSON.stringify(expenses));
 }
 
 function loadFromLocalStorage() {
   // Hämta sparad data och gör om text --> objekt och lägg i array
-  const savedIncomes = localStorage.getItem("incomes");
-  const savedExpenses = localStorage.getItem("expenses");
+  const savedIncomes = localStorage.getItem('incomes');
+  const savedExpenses = localStorage.getItem('expenses');
 
   if (savedIncomes) {
     incomes.push(...JSON.parse(savedIncomes));
@@ -105,11 +97,11 @@ function calculateBalance() {
   let totalIncome = 0;
   let totalExpense = 0;
 
-  incomes.forEach((post) => {
+  incomes.forEach(post => {
     totalIncome += post.amount;
   });
 
-  expenses.forEach((post) => {
+  expenses.forEach(post => {
     totalExpense += post.amount;
   });
 
@@ -120,12 +112,9 @@ function calculateBalance() {
 // Gruppera budgetpost inför rendering
 function groupByCategory(posts: BudgetPost[]) {
   // Skapa ett tomt objekt
-  const grouped: Record<
-    string,
-    { categoryValue: string; categoryText: string; items: BudgetPost[] }
-  > = {};
+  const grouped: Record<string, { categoryValue: string; categoryText: string; items: BudgetPost[] }> = {};
   // Gå igenom varje budgetpost
-  posts.forEach((post) => {
+  posts.forEach(post => {
     // Om kategorin inte finns --> skapa den
     if (!grouped[post.categoryValue]) {
       grouped[post.categoryValue] = {
@@ -160,29 +149,25 @@ if (..) = Om elementet är true...
 return = avbryt
 */
   if (!balanceNumber) return;
-  console.log("Balanssumman finns :) ");
+  console.log('Balanssumman finns :) ');
   // Kör funktionen som räknar ut balansen och spara resultatet i en variabel
   const balance = calculateBalance();
   // Sätt text i ett befintligt element som finns i html-filen
   balanceNumber.textContent = `${balance} kr`;
 
   // Rensa bort css-färg från äldre beräkning
-  balanceNumber.classList.remove(
-    "balance-positive",
-    "balance-negative",
-    "balance-zero"
-  );
+  balanceNumber.classList.remove('balance-positive', 'balance-negative', 'balance-zero');
 
   // Lägg till rätt färg (class)
   if (balance > 0) {
     // Om balance är positiv -> lägg till klassen med grön färg
-    balanceNumber.classList.add("balance-positive");
+    balanceNumber.classList.add('balance-positive');
   } else if (balance < 0) {
     // om balance är negativ -> lägg till klassen med röd färg
-    balanceNumber.classList.add("balance-negative");
+    balanceNumber.classList.add('balance-negative');
     // om balance varken är > 0 eller < 0 ...
   } else {
-    balanceNumber.classList.add("balance-zero");
+    balanceNumber.classList.add('balance-zero');
   }
 
   // Jag anropar funktionen varje gång datan som påverkar balansen ändras
@@ -193,16 +178,16 @@ function renderIncomeBudgetPost() {
   if (!incomeList) return;
 
   const groupedIncomes = groupByCategory(incomes);
-  let html = "";
+  let html = '';
 
-  Object.values(groupedIncomes).forEach((group) => {
+  Object.values(groupedIncomes).forEach(group => {
     html += `
       <li class="budgetpost budgetpost--category-${group.categoryValue}">
         <strong>${group.categoryText}</strong>
         <ul>
     `;
 
-    group.items.forEach((item) => {
+    group.items.forEach(item => {
       html += `
         <li class="budgetpost__item">
           <span class="budgetpost__description">${item.description}</span>
@@ -226,27 +211,25 @@ function renderIncomeBudgetPost() {
 
   incomeList.innerHTML = html;
 
-  document
-    .querySelectorAll<HTMLButtonElement>(".budgetpost__delete_btn")
-    .forEach((btn) => {
-      btn.addEventListener("click", deleteIncomeBudgetPost);
-    });
+  document.querySelectorAll<HTMLButtonElement>('.budgetpost__delete_btn').forEach(btn => {
+    btn.addEventListener('click', deleteIncomeBudgetPost);
+  });
 }
 
 function renderExpenseBudgetPost() {
   if (!expenseList) return;
 
   const groupedExpenses = groupByCategory(expenses);
-  let html = "";
+  let html = '';
 
-  Object.values(groupedExpenses).forEach((group) => {
+  Object.values(groupedExpenses).forEach(group => {
     html += `
       <li class="budgetpost budgetpost--category-${group.categoryValue}">
         <strong>${group.categoryText}</strong>
         <ul>
     `;
 
-    group.items.forEach((item) => {
+    group.items.forEach(item => {
       html += `
         <li class="budgetpost__item">
           <span class="budgetpost__description">${item.description}</span>
@@ -270,11 +253,9 @@ function renderExpenseBudgetPost() {
 
   expenseList.innerHTML = html;
 
-  document
-    .querySelectorAll<HTMLButtonElement>(".budgetpost__delete_btn")
-    .forEach((btn) => {
-      btn.addEventListener("click", deleteExpenseBudgetPost);
-    });
+  document.querySelectorAll<HTMLButtonElement>('.budgetpost__delete_btn').forEach(btn => {
+    btn.addEventListener('click', deleteExpenseBudgetPost);
+  });
 }
 
 // Visa options från json i dropdown
@@ -287,7 +268,7 @@ function renderCategoryOptions(
   // Skapa en tom option
   let html = `<option value="">Välj kategori</option>`;
   // Gå igenom varje kategori i json
-  categories.forEach((category) => {
+  categories.forEach(category => {
     // Skapa <option>
     html += `<option value="${category.value}">${category.text}</option>`;
   });
@@ -308,8 +289,7 @@ function createIncomeBudgetPostOnClick() {
     return;
   }
   // 1. läs valt alternativ från dropdown
-  const selectedOption =
-    incomeCategorySelect.options[incomeCategorySelect.selectedIndex];
+  const selectedOption = incomeCategorySelect.options[incomeCategorySelect.selectedIndex];
 
   // 2. läs värden från input-fälten och spara värdet i variabler
   const description = incomeDescriptionInput.value;
@@ -334,15 +314,10 @@ function createIncomeBudgetPostOnClick() {
 }
 
 function createExpenseBudgetPostOnClick() {
-  if (
-    !expenseCategorySelect ||
-    !expenseDescriptionInput ||
-    !expenseAmountInput
-  ) {
+  if (!expenseCategorySelect || !expenseDescriptionInput || !expenseAmountInput) {
     return;
   }
-  const selectedOption =
-    expenseCategorySelect.options[expenseCategorySelect.selectedIndex];
+  const selectedOption = expenseCategorySelect.options[expenseCategorySelect.selectedIndex];
   const description = expenseDescriptionInput.value;
   const amount = Number(expenseAmountInput.value);
 
@@ -364,7 +339,7 @@ function deleteIncomeBudgetPost(event: MouseEvent) {
   const button = event.currentTarget as HTMLButtonElement;
   const id = button.dataset.id;
 
-  incomes = incomes.filter((post) => post.id !== id); // filter istället för splice
+  incomes = incomes.filter(post => post.id !== id); // filter istället för splice
 
   saveToLocalStorage();
   renderIncomeBudgetPost();
@@ -375,7 +350,7 @@ function deleteExpenseBudgetPost(event: MouseEvent) {
   const button = event.currentTarget as HTMLButtonElement;
   const id = button.dataset.id;
 
-  expenses = expenses.filter((post) => post.id !== id);
+  expenses = expenses.filter(post => post.id !== id);
 
   saveToLocalStorage();
   renderExpenseBudgetPost();

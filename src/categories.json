@@ -5,12 +5,16 @@
       "value": "salary"
     },
     {
-      "text": "Studiebidrag",
-      "value": "studentincome"
+      "text": "Studiemedel",
+      "value": "studyfunds"
     },
     {
       "text": "Utdelning",
       "value": "dividend"
+    },
+    {
+      "text": "Övrigt",
+      "value": "other"
     }
   ],
   "expense": [
@@ -23,7 +27,7 @@
       "value": "entertainment"
     },
     {
-      "text": "Mat",
+      "text": "Livsmedel",
       "value": "food"
     },
     {
@@ -33,6 +37,10 @@
     {
       "text": "Sparande",
       "value": "savings"
+    },
+    {
+      "text": "Övrigt",
+      "value": "other"
     }
   ]
 }
