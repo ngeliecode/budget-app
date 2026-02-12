@@ -75,7 +75,7 @@
                   id="incomeDescription"
                   class="income-description"
                   name="income-description"
-                  placeholder="Beskrivning (t.ex. CSN)"
+                  placeholder="Beskrivning (t.ex. Skatteåterbäring)"
                 />
               </div>
 
@@ -113,13 +113,19 @@
                   id="expenseDescription"
                   class="expense-description"
                   name="expense-description"
-                  placeholder="T.ex. Hyra"
+                  placeholder="Beskrivning (t.ex. Hyra)"
                 />
               </div>
 
               <div class="amount">
                 <label for="expenseAmount" class="visually-hidden">Summa</label>
-                <input type="number" id="expenseAmount" class="expense-amount" name="expense-amount" />
+                <input
+                  type="number"
+                  id="expenseAmount"
+                  class="expense-amount"
+                  name="expense-amount"
+                  placeholder="Belopp"
+                />
               </div>
 
               <button type="button" class="btn btn--add-expense" id="addExpenseItemBtn">Lägg till</button>
@@ -138,17 +144,7 @@
           </section>
         </main>
 
-        <footer>
-          <p>
-            <a href="https://jigsaw.w3.org/css-validator/check/referer">
-              <img
-                style="border: 0; width: 88px; height: 31px"
-                src="https://jigsaw.w3.org/css-validator/images/vcss-blue"
-                alt="Valid CSS!"
-              />
-            </a>
-          </p>
-        </footer>
+        <footer></footer>
       </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
