@@ -1,9 +1,15 @@
-# Budgetkollen
+# 💰 Budgetkollen
 
-## 🛠 Byggt med
+## 🛠 Tekniker och verktyg
 
-**Språk:** TypeScript, HTML, CSS
+**Språk** 
+- TypeScript
+- HTML
+- CSS
 
-**Verktyg:** Vite, Prettier
+**Verktyg** 
+- Vite
+- Prettier
 
-**Pakethanterare:** npm
+**Pakethanterare** 
+- npm
