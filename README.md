@@ -1,5 +1,5 @@
 # 💰 Budget App
-En enkel budgetapplikation där användaren kan registrera inkomster och utgifter, kategorisera dem och få en automatiskt beräknad balans. Projektet är utvecklat som en del av kursen JavaScript inom programmet Frontend Developer.
+En enkel budgetapplikation där användaren kan registrera inkomster och utgifter, kategorisera dem och få en automatiskt beräknad balans. Datan sparas i webbläsarens localStorage för att finnas kvar mellan sidladdningar. Projektet är utvecklat som en del av kursen JavaScript inom programmet Frontend Developer.
 
 ## 🛠 Tekniker och verktyg
 
