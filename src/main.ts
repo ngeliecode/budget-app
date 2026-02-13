@@ -20,9 +20,9 @@ let expenses: BudgetPost[] = []; // BudgetPost[] = flera poster (objekt) -> list
 // VARIABLER / QUERY-SELECTORS / DOM-ELEMENT =======================================
 // =================================================================================
 
-// Definiera globala variabler som pekar på "Lägg till" knapparna
-const addIncomeItemBtn: HTMLButtonElement | null = document.querySelector('#addIncomeItemBtn');
-const addExpenseItemBtn: HTMLButtonElement | null = document.querySelector('#addExpenseItemBtn');
+// Formulär
+const incomeForm: HTMLFormElement | null = document.querySelector('#incomeForm');
+const expenseForm: HTMLFormElement | null = document.querySelector('#expenseForm');
 
 // Dropdowns
 const incomeCategorySelect: HTMLSelectElement | null = document.querySelector('#incomeCategory');
@@ -49,11 +49,6 @@ const themeToggleBtn = document.querySelector('.theme-toggle');
 // EVENT-LYSSNARE ==================================================================
 // =================================================================================
 
-// Lyssna efter klick på "Lägg till" knappar
-addIncomeItemBtn?.addEventListener('click', createIncomeBudgetPostOnClick);
-addExpenseItemBtn?.addEventListener('click', createExpenseBudgetPostOnClick);
-
-// Tema
 if (themeToggleBtn) {
   // Om den inte finns körs ingen event-lyssnare
   themeToggleBtn.addEventListener('click', () => {
@@ -61,6 +56,16 @@ if (themeToggleBtn) {
     document.body.classList.toggle('light');
   });
 }
+
+incomeForm?.addEventListener('submit', event => {
+  event.preventDefault();
+  createIncomeBudgetPostOnClick();
+});
+
+expenseForm?.addEventListener('submit', event => {
+  event.preventDefault();
+  createExpenseBudgetPostOnClick();
+});
 
 // =================================================================================
 // FUNKTIONER SOM HANTERAR DATA ====================================================
@@ -295,6 +300,10 @@ function createIncomeBudgetPostOnClick() {
   const description = incomeDescriptionInput.value;
   const amount = Number(incomeAmountInput.value); // inte en sträng
 
+  if (!description || !amount || !selectedOption.value) {
+    return;
+  }
+
   // 3. Skapa budgetpost
   const budgetPost = {
     id: crypto.randomUUID(), // istället för index och funkar oavsett rendering (gruppering)
@@ -311,6 +320,10 @@ function createIncomeBudgetPostOnClick() {
   // 6. visa data (visuellt på sidan)
   renderIncomeBudgetPost();
   renderBalance();
+  // 7. Töm formulär-fälten efter submit
+  incomeDescriptionInput.value = '';
+  incomeAmountInput.value = '';
+  incomeCategorySelect.selectedIndex = 0;
 }
 
 function createExpenseBudgetPostOnClick() {
@@ -320,6 +333,10 @@ function createExpenseBudgetPostOnClick() {
   const selectedOption = expenseCategorySelect.options[expenseCategorySelect.selectedIndex];
   const description = expenseDescriptionInput.value;
   const amount = Number(expenseAmountInput.value);
+
+  if (!description || !amount || !selectedOption.value) {
+    return;
+  }
 
   const budgetPost = {
     id: crypto.randomUUID(),
@@ -333,6 +350,10 @@ function createExpenseBudgetPostOnClick() {
   saveToLocalStorage();
   renderExpenseBudgetPost();
   renderBalance();
+  // Töm fälten
+  expenseDescriptionInput.value = '';
+  expenseAmountInput.value = '';
+  expenseCategorySelect.selectedIndex = 0;
 }
 
 function deleteIncomeBudgetPost(event: MouseEvent) {

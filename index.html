@@ -60,10 +60,10 @@
           <section>
             <h2>Inkomster</h2>
 
-            <form>
+            <form id="incomeForm">
               <div class="category">
                 <label for="incomeCategory" class="visually-hidden">Kategori</label>
-                <select id="incomeCategory" name="income-category">
+                <select id="incomeCategory" name="income-category" required>
                   <!-- dropdown-options renderas här -->
                 </select>
               </div>
@@ -75,7 +75,7 @@
                   id="incomeDescription"
                   class="income-description"
                   name="income-description"
-                  placeholder="Beskrivning (t.ex. Skatteåterbäring)"
+                  placeholder="Beskrivning (t.ex. CSN)"
                   required
                 />
               </div>
@@ -93,7 +93,7 @@
                 />
               </div>
 
-              <button type="button" class="btn btn--add-income" id="addIncomeItemBtn">Lägg till</button>
+              <button type="submit" class="btn btn--add-income" id="addIncomeItemBtn">Lägg till</button>
             </form>
             <ul class="budgetpost-list" id="incomeList"></ul>
           </section>
@@ -101,10 +101,10 @@
           <section>
             <h2>Utgifter</h2>
 
-            <form>
+            <form id="expenseForm">
               <div class="category">
                 <label for="expenseCategory" class="visually-hidden">Kategori</label>
-                <select id="expenseCategory" name="expense-category">
+                <select id="expenseCategory" name="expense-category" required>
                   <!-- dropdown-options renderas här -->
                 </select>
               </div>
@@ -134,7 +134,7 @@
                 />
               </div>
 
-              <button type="button" class="btn btn--add-expense" id="addExpenseItemBtn">Lägg till</button>
+              <button type="submit" class="btn btn--add-expense" id="addExpenseItemBtn">Lägg till</button>
             </form>
             <!-- budgetpost renderas här under (kategori, beskrivning, belopp) -->
             <ul class="budgetpost-list" id="expenseList"></ul>
