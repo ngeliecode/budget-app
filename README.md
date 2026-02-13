@@ -4,7 +4,7 @@ En enkel budgetapplikation där användaren kan registrera inkomster och utgifte
 
 ## 📸 Screenshots 
 
-<p>
+<p align="center">
   <img src="public/01_screenshot_dark_theme.png" width="300"/>&nbsp;&nbsp;
   <img src="public/02_screenshot_dark_theme.png" width="300"/>
 </p>
