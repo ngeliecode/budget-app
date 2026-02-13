@@ -2,26 +2,22 @@
 
 En enkel budgetapplikation där användaren kan registrera inkomster och utgifter, kategorisera dem och få en automatiskt beräknad balans. Datan sparas i webbläsarens localStorage för att finnas kvar mellan sidladdningar. Projektet är utvecklat som en del av kursen JavaScript inom programmet Frontend Developer.
 
-<img src="public/01_screenshot_dark_theme.png" width="400"/><img src="public/02_screenshot_dark_theme.png" width="400"/>
+## 📸 Screenshots 
 
-[🌐 Se live-sidan här](https://medieinstitutet.github.io/fed25d-js-inl-2-budget-app-ngeliecode/)
+<p>
+  <img src="public/01_screenshot_dark_theme.png" width="300"/>&nbsp;&nbsp;
+  <img src="public/02_screenshot_dark_theme.png" width="300"/>
+</p>
+
+🌐 Besök live-sidan [här](https://medieinstitutet.github.io/fed25d-js-inl-2-budget-app-ngeliecode/)
 
 ## 🛠 Tekniker och verktyg
 
-**Språk**
+**Språk:** TypeScript, HTML, CSS
 
-- TypeScript
-- HTML
-- CSS
+**Verktyg:** Vite, Prettier
 
-**Verktyg**
-
-- Vite
-- Prettier
-
-**Pakethanterare**
-
-- npm
+**Pakethanterare:** npm
 
 ## 🔎 Validering
 
