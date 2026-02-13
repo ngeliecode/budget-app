@@ -2,7 +2,9 @@
 
 En enkel budgetapplikation där användaren kan registrera inkomster och utgifter, kategorisera dem och få en automatiskt beräknad balans. Datan sparas i webbläsarens localStorage för att finnas kvar mellan sidladdningar. Projektet är utvecklat som en del av kursen JavaScript inom programmet Frontend Developer.
 
-[🌐 Se live-sidan här](https://medieinstitutet.github.io/fed25d-js-inl-2-budget-app-ngeliecode/) 
+![Budget App Screenshot](public/screenshot_dark_theme.png)
+
+[🌐 Se live-sidan här](https://medieinstitutet.github.io/fed25d-js-inl-2-budget-app-ngeliecode/)
 
 ## 🛠 Tekniker och verktyg
 
