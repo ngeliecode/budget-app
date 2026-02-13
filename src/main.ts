@@ -154,7 +154,6 @@ if (..) = Om elementet är true...
 return = avbryt
 */
   if (!balanceNumber) return;
-  console.log('Balanssumman finns :) ');
   // Kör funktionen som räknar ut balansen och spara resultatet i en variabel
   const balance = calculateBalance();
   // Sätt text i ett befintligt element som finns i html-filen
