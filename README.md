@@ -24,9 +24,7 @@ En enkel budgetapplikation där användaren kan registrera inkomster och utgifte
 - [W3C HTML Validator](https://validator.w3.org/)
 - [W3C CSS Validator](https://jigsaw.w3.org/css-validator/)
 
-HTML-koden har granskats och justerats för att uppfylla W3C:s standard för korrekt semantik och struktur. Informationsnotiser relaterade till Prettiers självstängande syntax (`/>`) identifierades, men bedömdes inte påverka sidans giltighet och har därför inte åtgärdats.
-
-CSS-validatorn genererade en varning relaterad till CSS-variabler. Min förståelse är att validatorn kan läsa exempelvis `var(--main-color)` men inte vilket värde variabeln faktiskt får. Validatorn kan därför inte analysera det faktiska värdet. Jag valde att inte åtgärda dessa varningar efter att ha kontrollerat att variablerna fungerar korrekt i webbläsaren.
+HTML-koden har granskats och justerats för att uppfylla W3C:s standard för korrekt semantik och struktur. 
 
 ## 🧭 Tillgänglighetskontroll
 
